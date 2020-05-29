@@ -11,7 +11,7 @@ F5 vLab environment in Azure
 - F5 BIG-IP Best 200 Mbps 
 
 **Requeriments**\
-To run this playbooks you will need:
+To run this playbooks you need:
 - A Linux Server with Internet access (Ubuntu 18.04 Virtual Machine recommended) 
 - Azure Account Information
   - [Subscription ID](https://portal.azure.com/?quickstart=true#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
