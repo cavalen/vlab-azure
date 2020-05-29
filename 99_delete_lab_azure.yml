@@ -1,0 +1,20 @@
+# This file removes the entire resourge group by the end of the lab
+# Authentication from file $HOME/.azure/credentials
+
+- name: Create Ubuntu resources
+  hosts: localhost
+  vars_files:
+    - ./config.yml
+
+  tasks: 
+    - name: STARTING NOW ...
+      debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
+    
+    - name: DELETE resource group "{{ RESOURCE_GROUP }}"
+      azure_rm_resourcegroup:
+        name: "{{ RESOURCE_GROUP }}"
+        location: "{{ DEFAULT_LOCATION }}"
+        state: absent
+        force_delete_nonempty: yes
+
+    - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
