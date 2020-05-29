@@ -1,9 +1,15 @@
-# aolab-azure
+# vlab-azure
 
-## F5 Automation & Orchestration Lab in Azure
+## F5 vLab in Azure
+
+**Description**
+F5 vLab environment in Azure
+- mgmt VLAN, default = 10.1.10.0/24
+- External VLAN, default = 10.1.10.0/24
+- Internal VLAN, default = 10.1.20.0/24
 
 **Requeriments**\
-To run this lab you will need:
+To run this playbooks you will need:
 - A Linux Server with Internet access (Ubuntu 18.04 Virtual Machine recommended) 
 - Azure Account Information
   - [Subscription ID](https://portal.azure.com/?quickstart=true#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
@@ -11,16 +17,12 @@ To run this lab you will need:
   - [Secret (Client Secret)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
   - [Tenant ID (Directory ID)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview)
 
-This lab contains 3 parts:
-1.  Ansible & Dependecies installation in a Linux server 
-2.  Lab/Infrasctructure deployment in Azure
-3.  A&O Lab (Provided PDF Guide)
 
-### Part 1: 
+### Part 1: Install Ansible
 In your Linux Server install Ansible and additional requeriments needed to deploy the infrastructure in Azure.\
 Note: This instructions are for Ubuntu, *you could use MacOS but you need to install ansible and python-pip using a package manger like `brew`.*
 
-SSH into your Linux server, clone this repo, then go to `aolab-azure/deploy-lab` and check/run `install_ansible.sh`:
+SSH into your Linux server, clone this repo, then go to `vlab-azure/` and check/run `install_ansible.sh`:
 
 ```
 # install_ansible.sh
@@ -40,8 +42,7 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 :warning: ***Please reboot you linux server after installing all packages !!!*** :warning:
 <br />
 
-### Part 2:
-2a) Azure Credentials. 
+### Part 2: Configure your Azure Credentials. 
 You need your Subscription ID, Client ID, Secret and Tenant ID.
 
 Create or edit the file `$HOME/.azure/credentials` with the following syntax and using your account info:
@@ -53,12 +54,14 @@ secret=xxxxxxxxxxxxxxxxx
 tenant=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-2b) Deploy Azure infrastructure using Ansible:
+Note: You can use azure-cli to setup your Azure credentials
 
-Go to folder `aolab-azure/deploy-lab`\
+### Part 3: Deploy Azure infrastructure using Ansible:
+
+Go to folder `vlab-azure`\
 Edit `config.yml` and change the `STUDENT_ID` parameter. ***Use lowercase letters and numbers only.***
 
-In the `deploy-lab` folder run the playbooks in order:
+Run the playbooks in order:
 ```
 ansible-playbook 01_deploy_rg_vnet_azure.yml
 ansible-playbook 02_deploy_ubuntu_docker_azure.yml
@@ -74,6 +77,8 @@ Forbidden for url: https://management.azure.com/subscriptions/xxxxxxxx-xxxx-xxxx
 ```
 You need to add a **Contributor Role** to your Registered Application in Azure.
 
+### Playbook Description: 
+
 **01 Azure resources**\
 The first playbook creates a Resource Group, a Security Group and a VNET (10.1.0.0/16) with 3 Subnets: Management (10.1.1.0/24), External (10.1.10.0/24) and Internal (10.1.20.0/24)
 
@@ -82,26 +87,19 @@ The second playbook deploys an Ubuntu Server with Docker and the following servi
 - Port 80   (Hackazon)
 - Port 443  (Hackazon)
 - Port 8081 (DVWA)
-- Port 8082 (Hello World, simple HTTP page)
+- Port 8082 (OWASP bwAPP)
 - Port 8083 (OWASP Juice Shop)
-- Port 8084 (NGINX default homepage)
+- Port 8084 (Hello World, simple HTTP page)
 - Port 8085 (NGINX default homepage)
 
 **03 BIG-IP**\
-The third playbook deploys a 2-NIC BIG-IP instance (PAYG) using a supported ARM template:\
-https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg
+The third playbook deploys a 3-NIC BIG-IP instance (PAYG) using a supported ARM template:\
+https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
 <br />
 
-
-### Part 3:
-Refer to the provided guide to run through the A&O lab.\
-:book: RTFM :book:
-<br />
-<br />
-<br />
   
 ## :heavy_exclamation_mark: DELETING THE LAB :heavy_exclamation_mark:
-At the end of the Lab do not forget to delete the resources created to avoid unwanted charges.
+Do not forget to delete the resources created to avoid unwanted charges.
 
 You can delete the Lab using the provided Ansible Playbook or manually deleting the Resource Group in Azure Portal
  
