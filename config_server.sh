@@ -30,10 +30,3 @@ curl https://raw.githubusercontent.com/cavalen/aolab-azure/master/files/docker-c
 cd /home/f5student/kafka-docker/
 sudo docker-compose up -d
 echo -e "Containers Created"
-
-# Clone Lab Repos
-cd /home/f5student/
-git clone https://github.com/cavalen/aolab-azure/
-mv /home/f5student/aolab-azure/playbooks /home/f5student/
-chown -R f5student:f5student /home/f5student/*
-echo -e "Files Created"
