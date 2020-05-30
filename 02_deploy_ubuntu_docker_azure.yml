@@ -65,7 +65,7 @@
         virtual_machine_extension_type: CustomScript
         type_handler_version: "2.0"
         #settings: '{"commandToExecute": "sudo apt-get update ; sudo apt-get install -y docker docker-compose ; sudo docker run --name hackazon --restart unless-stopped -d -p 8080:80 -p 8443:443 ianwijaya/hackazon ; sudo docker run --name nginx01 --restart=unless-stopped -d -p 8081:80 nginx:latest; sudo docker run --name dvwa --restart unless-stopped -d -p 8082:80 vulnerables/web-dvwa; sudo docker run --name f5helloworld --restart unless-stopped -d -p 8083:8080 f5devcentral/f5-hello-world; sudo docker run --name juice-shop --restart=unless-stopped -d -p 8084:3000 bkimminich/juice-shop "}'
-        settings: '{"fileUris": ["https://raw.githubusercontent.com/cavalen/aolab-azure/master/deploy-lab/config_server.sh"], "commandToExecute": "sh config_server.sh"}'
+        settings: '{"fileUris": ["https://raw.githubusercontent.com/cavalen/vlab-azure/master/deploy-lab/config_server.sh"], "commandToExecute": "sh config_server.sh"}'
         auto_upgrade_minor_version: false
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
