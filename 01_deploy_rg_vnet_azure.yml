@@ -64,7 +64,7 @@
         address_prefix: "{{ INT_PREFIX }}"
         virtual_network: "{{ VNET1 }}"
 
-    - name: Create Storage Account sa{{ STUDENT_ID }}{{ date }} in Resource Group {{ RESOURCE_GROUP }}
+    - name: Create Storage Account sa{{ STUDENT_ID }}{{ date }}
       azure_rm_storageaccount:
         location: "{{ DEFAULT_LOCATION }}"
         resource_group: "{{ RESOURCE_GROUP }}"
