@@ -17,7 +17,7 @@
         state: present
         resource_group_name: "{{ RESOURCE_GROUP }}"
         location: "{{ DEFAULT_LOCATION }}"
-	template_link: "https://raw.githubusercontent.com/cavalen/aolab-azure/master/files/template_bigip-2nic-payg.json"
+        template_link: "https://raw.githubusercontent.com/cavalen/aolab-azure/master/files/template_bigip-2nic-payg.json"
         parameters:
           adminUsername:
             value: "{{ ADMINUSERNAME }}"
@@ -26,9 +26,9 @@
           adminPasswordOrKey:
             value: "{{ ADMINPASSWORD }}"
           dnsLabel:
-            value: "{{ BIGIP_NAME }}{{ STUDENT_ID }}"
+            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
           instanceName:
-            value: "{{ BIGIP_NAME }}{{ STUDENT_ID }}"
+            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
           numberOfExternalIps:
             value: 1
           instanceType:
@@ -74,10 +74,10 @@
           allowPhoneHome:
             value: "Yes"
 
-    - name: Modify BIG-IP Network Security Group with new rules ({{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-nsg)
+    - name: Modify BIG-IP Network Security Group with new rules ({{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg)
       azure_rm_securitygroup:
         resource_group: "{{ RESOURCE_GROUP }}"
-        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-nsg"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
         rules:
               - name: 'Allow_HTTP_80'
                 protocol: Tcp
