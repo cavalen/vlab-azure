@@ -11,7 +11,7 @@
 # Student_ID. Use lowercase and numbers only
 STUDENT_ID: cav
 
-RESOURCE_GROUP: AO-LAB-{{STUDENT_ID}}
+RESOURCE_GROUP: vLAB-{{STUDENT_ID}}
 
 #DEFAULT_LOCATION: "Central US"
 DEFAULT_LOCATION: "Brazil South"
