@@ -44,11 +44,11 @@
           vnetResourceGroupName: 
             value: "{{ RESOURCE_GROUP }}"
           mgmtSubnetName:
-            value: "{{ VNET_SUBNET_MGMT }}"
+            value: "{{ SUBNET_MGMT }}"
           mgmtIpAddress:
             value: "{{ BIGIP_ADDRESS_MGMT }}"
           externalSubnetName:
-            value: "{{ VNET_SUBNET_EXT }}"
+            value: "{{ SUBNET_EXT }}"
           externalIpAddressRangeStart:
             value: "{{ BIGIP_ADDRESS_EXT }}"
           avSetChoice:
