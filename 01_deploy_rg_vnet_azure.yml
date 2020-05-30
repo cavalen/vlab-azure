@@ -6,7 +6,7 @@
   connection: local
   vars:
     local_ip: "nada-none"
-    date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
+    date: "{{ lookup('pipe', 'date +%Y%m') }}"
   vars_files:
     - ./config.yml
 
