@@ -105,7 +105,7 @@ Do not forget to delete the resources created to avoid unwanted charges.
 
 You can delete the Lab using the provided Ansible Playbook or manually deleting the Resource Group in Azure Portal
  
-Go to `./aolab-azure/deploy-lab` and run:
+Go to `./vlab-azure` and run:
 
 ```
 ansible_playbook 99_delete_lab_azure.yml
