@@ -1,13 +1,5 @@
 #
-# Variables for Azure template Deployment
-#
-#SUBSCRIPTION_ID: xxxxxxxxx-xxxxxxxxx-xxxxxxxxxxxx
-#TENANT_ID: xxxxxxxxx-xxxxxxxxx-xxxxxxxxxxxx
-#CLIENT_ID: xxxxxxxxx-xxxxxxxxx-xxxxxxxxxxxx
-#SERVICE_PRINCIPAL_SECRET: xxxxxx/xxxxxxxxx/xxxxxx
-
-# Credentials not used in this file in v2. 
-# Create a file $HOME/.azure/credentials with the following syntax:
+# To autenticate against Azure, create/edit the file $HOME/.azure/credentials using the following syntax:
 #
 # [default]
 # subscription_id=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
@@ -16,30 +8,42 @@
 # tenant=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 
-# Student_ID lowercase and numbers only
+# Student_ID. Use lowercase and numbers only
 STUDENT_ID: cav
 
-RESOURCE_GROUP: vLAB-{{ STUDENT_ID }}
+RESOURCE_GROUP: AO-LAB-{{STUDENT_ID}}
 
 #DEFAULT_LOCATION: "Central US"
 DEFAULT_LOCATION: "Brazil South"
 
-VNET1: lab-vnet-{{ STUDENT_ID }}
-VNET_SUBNET_MGMT: lab-subnet-mgmt-{{ STUDENT_ID }}
-VNET_SUBNET_INT: lab-subnet-int-{{ STUDENT_ID }}
-VNET_SUBNET_EXT: lab-subnet-ext-{{ STUDENT_ID }}
+VNET1: lab-vnet-{{STUDENT_ID}}
 
-NODE_NAME: lamp-server
-BIGIP_NAME: bigip
-NODE_ADDRESS: 10.1.10.80
-NODE_USER: f5student
-NODE_PASSWORD: f5DEMOs4uLATAM
-ALLOWED_SRC_ADDRESS: "0.0.0.0/0"
+SUBNET_MGMT: sub-mgmt-{{STUDENT_ID}}
+SUBNET_EXT: sub-ext-{{STUDENT_ID}}
+SUBNET_INT: sub-int-{{STUDENT_ID}}
+
+# VNET and SUBNET prefixes.
+VNET_CIDR: "10.1.0.0/16"
+MGMT_PREFIX: "10.1.1.0/24"
+EXT_PREFIX: "10.1.10.0/24"
+INT_PREFIX: "10.1.20.0/24"
+
+# BIG-IP management and Self-IP addresses
 BIGIP_ADDRESS_MGMT: 10.1.1.245
 BIGIP_ADDRESS_EXT: 10.1.10.245
 BIGIP_ADDRESS_INT: 10.1.20.245
+
+# Lamp server configuration
+NODE_ADDRESS: 10.1.10.80
+NODE_NAME: lamp-server
+NODE_USER: f5student
+NODE_PASSWORD: f5DEMOs4uLATAM
+
+BIGIP_NAME: bigiplab
 ADMINUSERNAME: azureuser
 ADMINPASSWORD: f5DEMOs4uLATAM
+
+ALLOWED_SRC_ADDRESS: "0.0.0.0/0"
 
 # This lab uses a PAYG template for BIG-IP. No need for license
 # BIGIP_LICENSE: XXXXX-XXXXX-XXXXX-XXXXX-XXXXXXX
