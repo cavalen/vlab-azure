@@ -7,7 +7,7 @@ F5 vLab environment in Azure
 - mgmt VLAN, default = 10.1.10.0/24
 - External VLAN, default = 10.1.10.0/24
 - Internal VLAN, default = 10.1.20.0/24
-- Ubuntu server with several containers (pool members)
+- Ubuntu server with several containers (pool members), default = 10.1.10.80
 - F5 BIG-IP Best 200 Mbps 
 
 **Requeriments**\
