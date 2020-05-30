@@ -6,7 +6,7 @@
   connection: local
   vars:
     local_ip: "nada-none"
-    date: "{{ lookup('pipe', 'date +%Y%m') }}"
+    date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
   vars_files:
     - ./config.yml
 
@@ -37,31 +37,31 @@
         name: "{{ RESOURCE_GROUP }}"
         location: "{{ DEFAULT_LOCATION }}"
 
-    - name: Create Virtual Network {{ VNET1 }} (10.1.0.0/16)
+    - name: Create Virtual Network {{ VNET1 }} ({{ VNET_CIDR }})
       azure_rm_virtualnetwork:
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "{{ VNET1 }}"
-        address_prefixes: "10.1.0.0/16"
+        address_prefixes: "{{ VNET_CIDR }}"
 
-    - name: Add Subnet {{ VNET_SUBNET_MGMT }} (10.1.1.0/24) to VNET {{ VNET1 }}
+    - name: Add Subnet {{ SUBNET_MGMT }} {{ MGMT_PREFIX }} to VNET {{ VNET1 }}
       azure_rm_subnet:
         resource_group: "{{ RESOURCE_GROUP }}"
-        name: "{{ VNET_SUBNET_MGMT }}"
-        address_prefix: "10.1.1.0/24"
+        name: "{{ SUBNET_MGMT }}"
+        address_prefix: "{{ MGMT_PREFIX }}"
         virtual_network: "{{ VNET1 }}"
 
-    - name: Add Subnet {{ VNET_SUBNET_EXT }} (10.1.10.0/24) to VNET {{ VNET1 }}
+    - name: Add Subnet {{ SUBNET_EXT }} ({{ EXT_PREFIX }}) to VNET {{ VNET1 }}
       azure_rm_subnet:
         resource_group: "{{ RESOURCE_GROUP }}"
-        name: "{{ VNET_SUBNET_EXT }}"
-        address_prefix: "10.1.10.0/24"
+        name: "{{ SUBNET_EXT }}"
+        address_prefix: "{{ EXT_PREFIX }}"
         virtual_network: "{{ VNET1 }}"
 
-    - name: Add Subnet {{ VNET_SUBNET_INT }} (10.1.20.0/24) to VNET {{ VNET1 }}
+    - name: Add Subnet {{ SUBNET_INT }} ({{ INT_PREFIX }}) to VNET {{ VNET1 }}
       azure_rm_subnet:
         resource_group: "{{ RESOURCE_GROUP }}"
-        name: "{{ VNET_SUBNET_INT }}"
-        address_prefix: "10.1.20.0/24"
+        name: "{{ SUBNET_INT }}"
+        address_prefix: "{{ INT_PREFIX }}"
         virtual_network: "{{ VNET1 }}"
 
     - name: Create Storage Account sa{{ STUDENT_ID }}{{ date }} in Resource Group {{ RESOURCE_GROUP }}
@@ -70,5 +70,61 @@
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "sa{{ STUDENT_ID }}{{ date }}"
         account_type: Standard_LRS
+
+    - name: Edit {{ NODE_NAME }}-{{ STUDENT_ID }}-sg0 Security Group in Resource Group {{ RESOURCE_GROUP }} (Allow DATA and Access)
+      azure_rm_securitygroup:
+          resource_group: "{{ RESOURCE_GROUP }}"
+          name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-sg0"
+          purge_rules: yes
+          rules:
+              - name: 'Allow_SSH'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 22
+                access: Allow
+                priority: 100
+                direction: Inbound
+              - name: 'Allow_HTTP_80'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 80
+                access: Allow
+                priority: 101
+                direction: Inbound
+              - name: 'Allow_HTTPS_443'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 443
+                access: Allow
+                priority: 102
+                direction: Inbound
+              - name: 'Allow_TCP_2181_kafka'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 2181
+                access: Allow
+                priority: 103
+                direction: Inbound  
+              - name: 'Allow_TCP_9092_kafka'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 9092
+                access: Allow
+                priority: 104
+                direction: Inbound                     
+              - name: 'Allow_TCP_8080_to_8089'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 8080-8089
+                access: Allow
+                priority: 105
+                direction: Inbound
+              - name: 'Allow_TCP_8443'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 8443
+                access: Allow
+                priority: 106
+                direction: Inbound
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
