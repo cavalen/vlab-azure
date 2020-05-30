@@ -69,6 +69,7 @@
         location: "{{ DEFAULT_LOCATION }}"
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "sa{{ STUDENT_ID }}{{ date }}"
+        kind: StorageV2
         account_type: Standard_LRS
 
     - name: Create {{ NODE_NAME }}-{{ STUDENT_ID }}-sg0 Security Group
