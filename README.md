@@ -87,7 +87,7 @@ The first playbook creates a Resource Group, a Security Group and a VNET (10.1.0
 **02 Ubuntu Docker Server**\
 The second playbook deploys an Ubuntu Server with Docker and the following services, used as Pool members: 
 - Port 8080   (Hackazon)
-- Port 8443  (Hackazon)
+- Port 8443  (Hackazon HTTPS)
 - Port 8081 (DVWA)
 - Port 8082 (OWASP bwAPP)
 - Port 8083 (OWASP Juice Shop)
