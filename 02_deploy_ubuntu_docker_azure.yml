@@ -21,7 +21,7 @@
         security_group: "{{ NODE_NAME }}-{{ STUDENT_ID }}-sg0"
         name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0"
         virtual_network: "{{ VNET1 }}"
-        subnet: "{{ VNET_SUBNET_EXT }}"
+        subnet: "{{ SUBNET_EXT }}"
         ip_configurations:
           - name: ipconfig1
             private_ip_allocation_method: Static
