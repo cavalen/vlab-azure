@@ -79,12 +79,12 @@ Forbidden for url: https://management.azure.com/subscriptions/xxxxxxxx-xxxx-xxxx
 ```
 You need to add a **Contributor Role** to your Registered Application in Azure.
 
-### Playbook Description: 
+### Playbooks Description: 
 
-**01 Azure resources**\
+**Playbook 01: Azure Resources**\
 The first playbook creates a Resource Group, a Security Group and a VNET (10.1.0.0/16) with 3 Subnets: Management (10.1.1.0/24), External (10.1.10.0/24) and Internal (10.1.20.0/24)
 
-**02 Ubuntu Docker Server**\
+**Playbook 02: Ubuntu Docker Server**\
 The second playbook deploys an Ubuntu Server with Docker and the following services, used as Pool members: 
 - Port 8080   (Hackazon)
 - Port 8443  (Hackazon HTTPS)
@@ -94,7 +94,7 @@ The second playbook deploys an Ubuntu Server with Docker and the following servi
 - Port 8084 (Hello World, simple HTTP page)
 - Port 8085 (NGINX default homepage)
 
-**03 BIG-IP**\
+**Playbook 03: BIG-IP**\
 The third playbook deploys a 2-NIC BIG-IP instance (PAYG) using a supported ARM template:\
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg
 <br />
