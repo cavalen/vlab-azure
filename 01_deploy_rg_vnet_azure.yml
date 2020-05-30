@@ -71,7 +71,7 @@
         name: "sa{{ STUDENT_ID }}{{ date }}"
         account_type: Standard_LRS
 
-    - name: Edit {{ NODE_NAME }}-{{ STUDENT_ID }}-sg0 Security Group in Resource Group {{ RESOURCE_GROUP }} (Allow DATA and Access)
+    - name: Create {{ NODE_NAME }}-{{ STUDENT_ID }}-sg0 Security Group
       azure_rm_securitygroup:
           resource_group: "{{ RESOURCE_GROUP }}"
           name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-sg0"
