@@ -74,7 +74,7 @@ ansible-playbook 03_deploy_bigip_2nic_azure.yml
 If you already have an Azure Account and get a 403 error like this:
 ```
 fatal: [localhost]: FAILED! => {"changed": false, "msg": "Error checking for existence of name AO-LAB-student - 403 Client Error:
-Forbidden for url: https://management.azure.com/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/AO-LAB-student?api-version=2017-05-10"}
+Forbidden for url: https://management.azure.com/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/vLAB-student?api-version=2017-05-10"}
 
 ```
 You need to add a **Contributor Role** to your Registered Application in Azure.
@@ -95,8 +95,8 @@ The second playbook deploys an Ubuntu Server with Docker and the following servi
 - Port 8085 (NGINX default homepage)
 
 **03 BIG-IP**\
-The third playbook deploys a 3-NIC BIG-IP instance (PAYG) using a supported ARM template:\
-https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
+The third playbook deploys a 2-NIC BIG-IP instance (PAYG) using a supported ARM template:\
+https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg
 <br />
 
   
