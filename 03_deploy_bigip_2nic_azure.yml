@@ -108,4 +108,10 @@
                 priority: 110
                 direction: Inbound
 
+    - name: Setting Virtual Server's DNS Name to service-{{ STUDENT_ID }}
+      azure_rm_publicipaddress:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
+        domain_name: "service-{{ STUDENT_ID }}"
+
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
