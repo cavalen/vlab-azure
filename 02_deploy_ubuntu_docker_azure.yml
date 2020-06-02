@@ -28,6 +28,12 @@
             private_ip_address: "{{ NODE_ADDRESS }}"
             public_ip_address_name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-pip0"
 
+    - name: Setting Lamp Server DNS Name to {{ NODE_NAME }}-{{ STUDENT_ID }}
+      azure_rm_publicipaddress:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-pip0"
+        domain_name: "{{ NODE_NAME }}-{{ STUDENT_ID }}"
+        
     - name: Create {{ NODE_NAME }}-{{ STUDENT_ID }} Virtual Machine
       #no_log: true
       azure_rm_virtualmachine:
