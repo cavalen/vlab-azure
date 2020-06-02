@@ -35,7 +35,7 @@ BIGIP_ADDRESS_INT: 10.1.20.245
 
 # Lamp server configuration
 NODE_ADDRESS: 10.1.10.80
-NODE_NAME: lamp-server
+NODE_NAME: lampserver
 NODE_USER: f5student
 NODE_PASSWORD: f5DEMOs4uLATAM
 
