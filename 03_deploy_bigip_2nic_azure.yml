@@ -11,7 +11,20 @@
   tasks:
     - name: Starting Now ... THIS CAN TAKE SOME TIME (7-10 MIN) ... HAVE ANOTHER COFFEE :)
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
-      
+
+    - name: Getting your Public IP Address
+      local_action:
+        module: uri
+        url: http://checkip.amazonaws.com
+        return_content: yes
+      register: local_ip
+      failed_when: not local_ip.content | regex_search ('(\d+).(\d+).(\d+).(\d+)\n')
+
+    - name: Set Public Network Variable
+      set_fact:
+        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
+        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
+        
     - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
       azure_rm_deployment:
         state: present
