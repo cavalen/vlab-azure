@@ -53,7 +53,10 @@
             Lamp Server DNS Record: {{lampdns}}\n
             BIG-IP Mgmt: https://{{bigipmgmtdns}}\n
             BIG-IP (Virtual Server) Public IP: {{bigipvsip}}\n
-            BIG-IP (Virtual Server) DNS Record: {{bigipvsdns}}"
+            BIG-IP (Virtual Server) DNS Record: {{bigipvsdns}}\n
+            \n
+            Lamp user: {{NODE_USER}}/{{NODE_PASSWORD}}\n
+            BIG-IP user: {{ADMINUSERNAME}}/{{ADMINPASSWORD}}\n"
 
     - name: Access Information
       debug: msg="{{info.split('\n')}}"
