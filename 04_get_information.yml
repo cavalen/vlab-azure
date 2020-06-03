@@ -1,0 +1,62 @@
+# Get information from the infrastructure (Public IPs and DNS), and save it to info.txt
+# Authentication from file $HOME/.azure/credentials
+
+- name: 04 - vLab Information
+  hosts: localhost
+  connection: local
+  vars:
+    lampinfo: ""
+    bigipmgmtinfo: ""
+    bigipvsinfo: ""
+    lamppublicip: ""
+    lampdns: ""
+    bigipmgmtip: ""
+    bigipmgmtdns: ""
+    bigipvsip: ""
+    bigipvsdns: ""
+    info: ""
+  vars_files:
+    - ./config.yml
+
+  tasks:
+  
+    - name: Getting Lamp Server Info
+      azure_rm_publicipaddress_info:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-pip0"
+      register: lampinfo
+
+    - name: Getting BIG-IP Mgmt Info
+      azure_rm_publicipaddress_info:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
+      register: bigipmgmtinfo
+
+    - name: Getting BIG-IP Virtual Server Info
+      azure_rm_publicipaddress_info:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
+      register: bigipvsinfo
+
+    - name: Setting variables
+      set_fact:
+        lamppublicip: "{{lampinfo.publicipaddresses[0].ip_address }}"
+        lampdns: "{{lampinfo.publicipaddresses[0].dns_settings.fqdn}}"
+        bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
+        bigipmgmtdns: "{{bigipmgmtinfo.publicipaddresses[0].dns_settings.fqdn}}"
+        bigipvsip: "{{bigipvsinfo.publicipaddresses[0].ip_address}}"
+        bigipvsdns: "{{bigipvsinfo.publicipaddresses[0].dns_settings.fqdn}}"
+
+    - name: Setting Variables
+      set_fact:
+        info: "Lamp Server Public IP: {{lamppublicip}}\n
+            Lamp Server DNS Record: {{lampdns}}\n
+            BIG-IP Mgmt: https://{{bigipmgmtdns}}\n
+            BIG-IP (Virtual Server) Public IP: {{bigipvsip}}\n
+            BIG-IP (Virtual Server) DNS Record: {{bigipvsdns}}"
+
+    - name: Access Information
+      debug: msg="{{info.split('\n')}}"
+
+    - name: Saving Information to file info.txt
+      shell: echo "{{ info }}" > "{{playbook_dir}}"/info.txt
