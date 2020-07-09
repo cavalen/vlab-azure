@@ -45,11 +45,11 @@
           numberOfExternalIps:
             value: 1
           instanceType:
-            value: "Standard_DS2_v2"
+            value: "Standard_DS3_v2"
           imageName:
             value: "Best200Mbps"
           bigIpVersion:
-            value: "latest"
+            value: "15.1.002000"
           bigIpModules:
             value : "ltm:nominal,asm:nominal"
           vnetName:
