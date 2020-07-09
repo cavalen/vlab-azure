@@ -2,14 +2,14 @@
 # template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.json"
 # Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
 
-- name: 03 - Deploy BIG-IP 2-NIC on Azure
+- name: 03 - Deploy BIG-IP 3-NIC on Azure
   hosts: localhost
   connection: local
   vars_files:
     - ./config.yml
 
   tasks:
-    - name: Starting Now ... THIS CAN TAKE SOME TIME (7-10 MIN) ... HAVE ANOTHER COFFEE :)
+    - name: Starting Now ... Deploying 3-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
 
     - name: Getting your Public IP Address
