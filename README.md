@@ -3,7 +3,7 @@
 ## F5 vLab in Azure
 
 **Description**\
-F5 vLab environment in Azure
+F5 vLab environment in Azure, using a 2-NIC or 3-NIC deployment
 - mgmt VLAN, default = 10.1.10.0/24
 - External VLAN, default = 10.1.10.0/24
 - Internal VLAN, default = 10.1.20.0/24
@@ -63,7 +63,7 @@ Note: You can use azure-cli to setup your Azure credentials
 Go to folder `vlab-azure`\
 Edit `config.yml` and change the `STUDENT_ID` parameter. ***Use lowercase letters and numbers only.***
 
-Run the playbooks in order:
+Run the playbooks in order: (Use the correct playbook if you want to deploy a 3-NIC BIG-IP)
 ```
 ansible-playbook 01_deploy_rg_vnet_azure.yml
 ansible-playbook 02_deploy_ubuntu_docker_azure.yml
@@ -95,8 +95,9 @@ The second playbook deploys an Ubuntu Server with Docker and the following servi
 - Port 8085 (NGINX default homepage)
 
 **Playbook 03: BIG-IP**\
-The third playbook deploys a 2-NIC BIG-IP instance (PAYG) using a supported ARM template:\
+The third playbook deploys a 2-NIC or 3-NIC BIG-IP instance (PAYG) using a supported ARM template:\
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg
+https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
 
 **Playbook 04 - Get Infrastructure Information**\
 The last playbook displays information relevant for the lab, and saves that information in a local file: **info.txt**
