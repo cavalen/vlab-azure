@@ -55,15 +55,19 @@
           vnetName:
             value: "{{ VNET1 }}"
           vnetResourceGroupName: 
-            value: "{{ RESOURCE_GROUP }}"
+            value: "{{ RESOURCE_GROUP }}"          
           mgmtSubnetName:
             value: "{{ SUBNET_MGMT }}"
           mgmtIpAddress:
-            value: "{{ BIGIP_ADDRESS_MGMT }}"
+            value: "{{ BIGIP_ADDRESS_MGMT }}"          
           externalSubnetName:
             value: "{{ SUBNET_EXT }}"
           externalIpAddressRangeStart:
-            value: "{{ BIGIP_ADDRESS_EXT }}"
+            value: "{{ BIGIP_ADDRESS_EXT }}"          
+          internalSubnetName:
+            value: "{{ SUBNET_INT }}"
+          internalIpAddress:
+            value: "{{ BIGIP_ADDRESS_INT }}"
           avSetChoice:
             value: "CREATE_NEW"   
           zoneChoice:
@@ -76,6 +80,8 @@
             value: "0.pool.ntp.org"
           timeZone:
             value: "UTC"
+          customImageUrn:
+            value: "OPTIONAL"
           customImage:
             value: "OPTIONAL"
           restrictedSrcAddress:
