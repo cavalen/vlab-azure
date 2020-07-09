@@ -30,7 +30,7 @@
         state: present
         resource_group_name: "{{ RESOURCE_GROUP }}"
         location: "{{ DEFAULT_LOCATION }}"
-        template_link: "https://raw.githubusercontent.com/cavalen/aolab-azure/master/files/template_bigip-2nic-payg.json"
+        template_link: "https://raw.githubusercontent.com/cavalen/aolab-azure/master/files/template_bigip-3nic-payg.json"
         parameters:
           adminUsername:
             value: "{{ ADMINUSERNAME }}"
