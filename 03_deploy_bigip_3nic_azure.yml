@@ -1,0 +1,124 @@
+# This file establishes the necessary resources on Azure to deploy a BIG-IP VE
+# template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.json"
+# Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
+
+- name: 03 - Deploy BIG-IP 2-NIC on Azure
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ./config.yml
+
+  tasks:
+    - name: Starting Now ... THIS CAN TAKE SOME TIME (7-10 MIN) ... HAVE ANOTHER COFFEE :)
+      debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
+
+    - name: Getting your Public IP Address
+      local_action:
+        module: uri
+        url: http://checkip.amazonaws.com
+        return_content: yes
+      register: local_ip
+      failed_when: not local_ip.content | regex_search ('(\d+).(\d+).(\d+).(\d+)\n')
+
+    - name: Set Public Network Variable
+      set_fact:
+        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
+        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
+        
+    - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
+      azure_rm_deployment:
+        state: present
+        resource_group_name: "{{ RESOURCE_GROUP }}"
+        location: "{{ DEFAULT_LOCATION }}"
+        template_link: "https://raw.githubusercontent.com/cavalen/aolab-azure/master/files/template_bigip-2nic-payg.json"
+        parameters:
+          adminUsername:
+            value: "{{ ADMINUSERNAME }}"
+          authenticationType:
+            value: "password"
+          adminPasswordOrKey:
+            value: "{{ ADMINPASSWORD }}"
+          dnsLabel:
+            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
+          instanceName:
+            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
+          numberOfExternalIps:
+            value: 1
+          instanceType:
+            value: "Standard_DS2_v2"
+          imageName:
+            value: "Best200Mbps"
+          bigIpVersion:
+            value: "latest"
+          bigIpModules:
+            value : "ltm:nominal,asm:nominal"
+          vnetName:
+            value: "{{ VNET1 }}"
+          vnetResourceGroupName: 
+            value: "{{ RESOURCE_GROUP }}"
+          mgmtSubnetName:
+            value: "{{ SUBNET_MGMT }}"
+          mgmtIpAddress:
+            value: "{{ BIGIP_ADDRESS_MGMT }}"
+          externalSubnetName:
+            value: "{{ SUBNET_EXT }}"
+          externalIpAddressRangeStart:
+            value: "{{ BIGIP_ADDRESS_EXT }}"
+          avSetChoice:
+            value: "CREATE_NEW"   
+          zoneChoice:
+            value: "1"            
+          provisionPublicIP:
+            value: "Yes"
+          declarationUrl:
+            value: "NOT_SPECIFIED"      
+          ntpServer:
+            value: "0.pool.ntp.org"
+          timeZone:
+            value: "UTC"
+          customImage:
+            value: "OPTIONAL"
+          restrictedSrcAddress:
+            value: "{{ ALLOWED_SRC_ADDRESS }}"
+          tagValues: 
+            value: {"application":"APP","cost":"COST","environment":"ENV","group":"GROUP","owner":"OWNER"}
+          allowUsageAnalytics:
+            value: "No"
+          allowPhoneHome:
+            value: "Yes"
+
+    - name: Modify BIG-IP Network Security Group with new rules ({{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg)
+      azure_rm_securitygroup:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
+        rules:
+              - name: 'Allow_HTTP_80'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 80
+                access: Allow
+                priority: 104
+                direction: Inbound
+              - name: 'Allow_HTTPS_443'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 443
+                access: Allow
+                priority: 106
+                direction: Inbound                
+              - name: 'Allow_TCP_8080_8089'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 8080-8089
+                access: Allow
+                priority: 108
+                direction: Inbound
+              - name: 'Allow_TCP_8443'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 8443
+                access: Allow
+                priority: 110
+                direction: Inbound
+
+    - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
