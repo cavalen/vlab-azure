@@ -1,6 +1,7 @@
 # This file establishes the necessary resources on Azure to deploy a BIG-IP VE
-# template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.json"
-# Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
+# template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.json"
+# Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.parameters.json
+# Template v8.0.0
 
 - name: 03 - Deploy BIG-IP 3-NIC on Azure
   hosts: localhost
@@ -126,5 +127,30 @@
                 access: Allow
                 priority: 110
                 direction: Inbound
+
+    - name: Enable IP-Forwording for Internal Interface
+      azure_rm_networkinterface:
+        location: "{{ DEFAULT_LOCATION }}"
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-int"
+        virtual_network: "{{ VNET1 }}"
+        subnet: "{{ SUBNET_INT }}"
+        enable_ip_forwarding: True
+        ip_configurations: 
+          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ipconfig1"
+
+    - name: Enable IP-Forwording for External Interface
+      azure_rm_networkinterface:
+        location: "{{ DEFAULT_LOCATION }}"
+        resource_group: "{{ RESOURCE_GROUP }}"
+        security_group: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext"
+        virtual_network: "{{ VNET1 }}"
+        subnet: "{{ SUBNET_EXT }}"
+        enable_ip_forwarding: True
+        ip_configurations:
+          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-ipconfig"
+            primary: True
+          - name: "{{ RESOURCE_GROUP }}-ext-ipconfig0"
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
