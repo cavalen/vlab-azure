@@ -22,8 +22,8 @@
 
     - name: Set Public Network Variable
       set_fact:
-        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
-        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
+        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
+        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
         
     - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
       azure_rm_deployment:
