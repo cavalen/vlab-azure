@@ -9,7 +9,7 @@
     - ./config.yml
 
   tasks:
-    - name: Starting Now ... THIS CAN TAKE SOME TIME (7-10 MIN) ... HAVE ANOTHER COFFEE :)
+    - name: Starting Now ... Deploying 2-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...   
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
 
     - name: Getting your Public IP Address
