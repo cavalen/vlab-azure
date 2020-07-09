@@ -76,6 +76,8 @@
             value: "0.pool.ntp.org"
           timeZone:
             value: "UTC"
+          customImageUrn: 
+            value: "OPTIONAL"
           customImage:
             value: "OPTIONAL"
           restrictedSrcAddress:
