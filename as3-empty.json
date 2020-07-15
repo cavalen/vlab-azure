@@ -1,0 +1,15 @@
+{
+    "class": "AS3",
+    "action": "deploy",
+    "persist": true,
+    "declaration": {
+       "class": "ADC",
+       "schemaVersion": "3.0.0",
+       "id": "lmnopq23456",
+       "label": "F5 Networks - vLab",
+       "remark": "HTTP applications Declaration",
+       "Web_Apps": {
+          "class": "Tenant"
+       }
+    }
+}
