@@ -49,7 +49,8 @@
 
     - name: Setting Variables
       set_fact:
-        info: "Lamp Server Public IP: {{lamppublicip}}\n
+        info: "\n
+            Lamp Server Public IP: {{lamppublicip}}\n
             Lamp Server DNS Record: {{lampdns}}\n
             BIG-IP Mgmt: https://{{bigipmgmtdns}}\n
             BIG-IP (Virtual Server) Public IP: {{bigipvsip}}\n
