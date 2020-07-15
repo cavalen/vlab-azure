@@ -139,7 +139,6 @@
         ip_configurations: 
           - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ipconfig1"
 
-    # ERROR, FALLA PORQ FALTA ADICIONAR LAS IPs PUBLICAS !!!!!
     - name: Enable IP-Forwording for External Interface
       azure_rm_networkinterface:
         location: "{{ DEFAULT_LOCATION }}"
@@ -152,6 +151,8 @@
         ip_configurations:
           - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-ipconfig"
             primary: True
+            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-pip0"
           - name: "{{ RESOURCE_GROUP }}-ext-ipconfig0"
+            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
