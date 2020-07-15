@@ -32,7 +32,7 @@
 
     - name: Deploying AS3 configuration
       bigip_appsvcs_extension:
-        #content: "{{ lookup('file', '{{ playbook_dir }}/as3.json') }}"
-        content: "{{ lookup('file', '{{ playbook_dir }}/as3-empty.json') }}"
+        content: "{{ lookup('file', '{{ playbook_dir }}/as3.json') }}"
+        #content: "{{ lookup('file', '{{ playbook_dir }}/as3-empty.json') }}"
         state: present
         provider: "{{ provider }}"
