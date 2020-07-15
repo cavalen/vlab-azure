@@ -1,0 +1,35 @@
+- name: Deploy an App using AS3
+  hosts: localhost
+  connection: local
+  vars:
+    bigipmgmtip: ""
+    bigipmgmtinfo: ""
+    provider:
+      server: "{{ bigipmgmtip }}"
+      server_port: "443"
+      user: "{{ADMINUSERNAME}}"
+      password: "{{ADMINPASSWORD}}"
+      validate_certs: no
+      transport: "rest"
+
+  vars_files:
+    - ./config.yml
+
+  tasks:
+
+    - name: Getting BIG-IP Mgmt Info
+      azure_rm_publicipaddress_info:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
+      register: bigipmgmtinfo
+
+    - name: Setting variables
+      set_fact:
+        bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
+
+    - name: Download and Install AS3 RPM
+      include_role:
+        name: f5devcentral.f5app_services_package
+      vars:
+        f5app_services_package_url: "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.20.0/f5-appsvcs-3.20.0-3.noarch.rpm"
+        f5app_services_package_path: "/tmp/f5-appsvcs-3.20.0-3.noarch.rpm"
