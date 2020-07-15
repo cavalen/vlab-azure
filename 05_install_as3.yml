@@ -1,4 +1,4 @@
-- name: Deploy an App using AS3
+- name: 05 Install AS3 RPM
   hosts: localhost
   connection: local
   vars:
