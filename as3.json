@@ -50,7 +50,7 @@
              "pool_dvwa": {
                 "class": "Pool",
                 "monitors": [
-                   "http"
+                   "tcp"
                 ],
                 "members": [{
                    "servicePort": 8081,
@@ -75,7 +75,7 @@
              "pool_bwapp": {
                 "class": "Pool",
                 "monitors": [
-                   "http"
+                   "tcp"
                 ],
                 "members": [{
                    "servicePort": 8082,
@@ -160,33 +160,46 @@
                 }]
              }
           },
-          "vs_Hackazon_http_8443": {
+          "vs_hackazon_https_waf_8443": {
              "class": "Application",
              "template": "generic",
-             "vs_Hackazon_http_8443": {
-                "class": "Service_HTTPS",
-                "virtualAddresses": [
-                   "10.1.10.246"
-                ],
-                "shareAddresses": true,
-                "redirect80": false,
-                "pool": "pool_hackazon_8443",
-                "clientTLS": "pTlsClient_Local",
-                "serverTLS": "pTlsServer_Local",
-                "virtualPort": 8443                
-             },
-             "pool_hackazon_8443": {
-                "class": "Pool",
-                "monitors": [
-                   "http"
-                ],
-                "members": [{
-                   "servicePort": 8443,
-                   "serverAddresses": [
-                      "10.1.10.80"
-                   ]
-                }]
-             },
+             "vs_hackazon_https_waf_8443": {
+               "class": "Service_HTTPS",
+               "virtualAddresses": [
+                  "10.1.10.246"
+               ],
+               "shareAddresses": true,
+               "redirect80": false,
+               "pool": "pool_hackazon_8443",
+               "clientTLS": "pTlsClient_Local",
+               "serverTLS": "pTlsServer_Local",
+               "virtualPort": 8443,
+               "securityLogProfiles": [
+                   	{
+                   		"bigip": "/Common/Log all requests"
+                   	}
+               ],
+               "policyWAF": {
+                 	"use": "vLabWAF"
+               }
+            },
+            "pool_hackazon_8443": {
+               "class": "Pool",
+               "monitors": [
+                  "http"
+               ],
+               "members": [{
+                  "servicePort": 8443,
+                  "serverAddresses": [
+                     "10.1.10.80"
+                  ]
+               }]
+            },
+            "vLabWAF": {
+                	"class": "WAF_Policy",
+                	"url": "https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/waf_acme.xml",
+                	"ignoreChanges": true
+                }, 
             "pTlsServer_Local": {
                 "class": "TLS_Server",
                 "label": "simplest decl requires just cert",
