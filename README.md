@@ -33,8 +33,9 @@ SSH into your Linux server, clone this repo, then go to `vlab-azure/` and check/
 sudo apt update
 sudo apt-add-repository --yes ppa:ansible/ansible
 sudo apt -y upgrade
-sudo apt install -y docker.io python3-pip docker-compose git ansible
+sudo apt install -y software-properties-common ansible docker.io docker-compose python3-pip git rpm
 pip3 install boto boto3 netaddr passlib f5-sdk bigsuds deepdiff 'ansible[azure]' 
+ansible-galaxy install f5devcentral.f5app_services_package
 
 # Install Azure CLI 
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
