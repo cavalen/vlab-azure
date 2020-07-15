@@ -18,10 +18,11 @@
                 "virtualAddresses": [
                    "10.1.10.246"
                 ],
-                "pool": "pool_hackazon",
-                "virtualPort": 8080
+                "pool": "pool_hackazon_8080",
+                "virtualPort": 8080,
+                "shareAddresses": true
              },
-             "pool_hackazon": {
+             "pool_hackazon_8080": {
                 "class": "Pool",
                 "monitors": [
                    "http"
@@ -33,6 +34,178 @@
                    ]
                 }]
              }
+          },
+          "vs_dvwa_8081": {
+             "class": "Application",
+             "template": "generic",
+             "vs_dvwa_8081": {
+                "class": "Service_HTTP",
+                "virtualAddresses": [
+                   "10.1.10.246"
+                ],
+                "pool": "pool_dvwa",
+                "virtualPort": 8081,
+                "shareAddresses": true
+             },
+             "pool_dvwa": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 8081,
+                   "serverAddresses": [
+                      "10.1.10.80"
+                   ]
+                }]
+             }
+          },
+          "vs_bwAPP_8082": {
+             "class": "Application",
+             "template": "generic",
+             "vs_bwAPP_8082": {
+                "class": "Service_HTTP",
+                "virtualAddresses": [
+                   "10.1.10.246"
+                ],
+                "pool": "pool_bwapp",
+                "virtualPort": 8082,
+                "shareAddresses": true
+             },
+             "pool_bwapp": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 8082,
+                   "serverAddresses": [
+                      "10.1.10.80"
+                   ]
+                }]
+             }
+          },
+          "vs_juice_8083": {
+             "class": "Application",
+             "template": "generic",
+             "vs_juice_8083": {
+                "class": "Service_HTTP",
+                "virtualAddresses": [
+                   "10.1.10.246"
+                ],
+                "pool": "pool_juice",
+                "virtualPort": 8083,
+                "shareAddresses": true
+             },
+             "pool_juice": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 8083,
+                   "serverAddresses": [
+                      "10.1.10.80"
+                   ]
+                }]
+             }
+          },
+          "vs_helloworld_8084": {
+             "class": "Application",
+             "template": "generic",
+             "vs_helloworld_8084": {
+                "class": "Service_HTTP",
+                "virtualAddresses": [
+                   "10.1.10.246"
+                ],
+                "pool": "pool_helloworld",
+                "virtualPort": 8084,
+                "shareAddresses": true
+             },
+             "pool_helloworld": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 8084,
+                   "serverAddresses": [
+                      "10.1.10.80"
+                   ]
+                }]
+             }
+          },
+          "vs_nginx_8085": {
+             "class": "Application",
+             "template": "generic",
+             "vs_nginx_8085": {
+                "class": "Service_HTTP",
+                "virtualAddresses": [
+                   "10.1.10.246"
+                ],
+                "pool": "pool_nginx",
+                "virtualPort": 8085,
+                "shareAddresses": true
+             },
+             "pool_nginx": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 8085,
+                   "serverAddresses": [
+                      "10.1.10.80"
+                   ]
+                }]
+             }
+          },
+          "vs_Hackazon_http_8443": {
+             "class": "Application",
+             "template": "generic",
+             "vs_Hackazon_http_8443": {
+                "class": "Service_HTTPS",
+                "virtualAddresses": [
+                   "10.1.10.246"
+                ],
+                "shareAddresses": true,
+                "redirect80": false,
+                "pool": "pool_hackazon_8443",
+                "clientTLS": "pTlsClient_Local",
+                "serverTLS": "pTlsServer_Local",
+                "virtualPort": 8443                
+             },
+             "pool_hackazon_8443": {
+                "class": "Pool",
+                "monitors": [
+                   "http"
+                ],
+                "members": [{
+                   "servicePort": 8443,
+                   "serverAddresses": [
+                      "10.1.10.80"
+                   ]
+                }]
+             },
+            "pTlsServer_Local": {
+                "class": "TLS_Server",
+                "label": "simplest decl requires just cert",
+                "certificates": [
+                    {
+                    "certificate": "tlsserver_local_cert"
+                    }
+                ]
+            },
+            "pTlsClient_Local": {
+                "class": "TLS_Client",
+                "label": "simplest decl requires just cert",
+                "clientCertificate": "tlsserver_local_cert"
+            },            
+            "tlsserver_local_cert": {
+                "class": "Certificate",
+                "certificate": {"bigip":"/Common/default.crt"},
+                "privateKey": {"bigip":"/Common/default.key"}
+            }
           }
        }
     }
