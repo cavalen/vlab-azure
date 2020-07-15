@@ -139,6 +139,7 @@
         ip_configurations: 
           - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ipconfig1"
 
+    # ERROR, FALLA PORQ FALTA ADICIONAR LAS IPs PUBLICAS !!!!!
     - name: Enable IP-Forwording for External Interface
       azure_rm_networkinterface:
         location: "{{ DEFAULT_LOCATION }}"
