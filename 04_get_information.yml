@@ -50,11 +50,12 @@
     - name: Setting Variables
       set_fact:
         info: "\n
-            Lamp Server Public IP: {{lamppublicip}}\n
-            Lamp Server DNS Record: {{lampdns}}\n
-            BIG-IP Mgmt: https://{{bigipmgmtdns}}\n
-            BIG-IP (Virtual Server) Public IP: {{bigipvsip}}\n
-            BIG-IP (Virtual Server) DNS Record: {{bigipvsdns}}\n
+            Lamp Server IP: {{lamppublicip}}\n
+            Lamp Server DNS: {{lampdns}}\n
+            BIG-IP Mgmt IP: {{bigipmgmtip}}\n
+            BIG-IP Mgmt DNS: https://{{bigipmgmtdns}}\n
+            BIG-IP (Virtual Server) IP: {{bigipvsip}}\n
+            BIG-IP (Virtual Server) DNS: {{bigipvsdns}}\n
             \n
             Lamp user: {{NODE_USER}}/{{NODE_PASSWORD}}\n
             BIG-IP user: {{ADMINUSERNAME}}/{{ADMINPASSWORD}}\n"
