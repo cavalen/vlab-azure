@@ -103,6 +103,7 @@ https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/stand
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
 
 **Playbook 04: Install/Update AS3**\
+This one installs AS3 v3.20.0 and TS v1.12.0.\
 We need AS3 version 3.20 to be able to configure all of the services. This version includes a feature to allow the same Virtual IP with different Virtual Servers (shareAddresses)
 
 **Playbook 05: Deploy Services using AS3**\
