@@ -106,7 +106,7 @@ https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/stand
 We need AS3 version 3.20 to be able to configure all of the services. This version includes a feature to allow the same Virtual IP with different Virtual Servers (shareAddresses)
 
 **Playbook 05: Deploy Services using AS3**\
-Deploy all the services from Playbook #2 as Virtual Servers.
+Deploy all the services from Playbook #2 as Virtual Servers.\
 Hackazon (8443) Virtual Server includes a WAF policy.
 
 **Playbook 06: Get Infrastructure Information**\
