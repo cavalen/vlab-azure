@@ -107,7 +107,8 @@ We need AS3 version 3.20 to be able to configure all of the services. This versi
 
 **Playbook 05: Deploy Services using AS3**\
 Deploy all the services from Playbook #2 as Virtual Servers.\
-Hackazon (8443) Virtual Server includes a WAF policy.
+- Hackazon (8443) Virtual Server includes a WAF policy.\
+- as3.json is referenced in this playbook, and is the input for our declarative API\
 
 **Playbook 06: Get Infrastructure Information**\
 The last playbook displays information relevant for the lab, and saves that information in a local file: **info.txt**
