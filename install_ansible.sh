@@ -1,5 +1,4 @@
-# For Ubuntu 18.04 LTS
-# Install Ansible & Dependencies
+# For Ubuntu 18.04 LTS - Install Ansible & Dependencies
 sudo apt-add-repository --yes ppa:ansible/ansible
 sudo apt update
 sudo apt install -y software-properties-common ansible docker.io docker-compose python3-pip rpm
