@@ -8,4 +8,3 @@ ansible-galaxy install f5devcentral.f5app_services_package
 
 # Install Azure CLI 
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-az version
