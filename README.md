@@ -22,7 +22,7 @@ To run this playbooks you need:
 
 ### Part 1: Install Ansible
 In your Linux Server install Ansible and additional requeriments needed to deploy the infrastructure in Azure.\
-Note: This instructions are for Ubuntu, *you could use MacOS but you need to install ansible and python-pip using a package manger like `brew`.*
+Note: This instructions are for Ubuntu v18.04 LTS, *you could use MacOS but you need to install ansible and python-pip using a package manger like `brew`.*
 
 SSH into your Linux server, clone this repo, then go to `vlab-azure/` and check/run `install_ansible.sh`:
 
