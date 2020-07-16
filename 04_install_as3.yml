@@ -1,4 +1,6 @@
-# Update/Install AS3 RPM - version 3.20.0
+# Update/Install AS3 & TS RPM
+# AS3 version 3.20.0
+# TS version 1.12.0
 
 - name: 05 Install AS3 RPM
   hosts: localhost
