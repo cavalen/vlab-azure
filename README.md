@@ -12,7 +12,7 @@ F5 vLab environment in Azure, using a 2-NIC or 3-NIC deployment
 
 **Requeriments**\
 To run this playbooks you need:
-- A Linux Server with Internet access (Ubuntu 18.04 Virtual Machine recommended) 
+- A Linux Server with Internet access (Ubuntu Server 18.04 Virtual Machine recommended) 
 - Azure Account Information
   - [Subscription ID](https://portal.azure.com/?quickstart=true#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
   - [Client ID (Application ID)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
@@ -20,7 +20,7 @@ To run this playbooks you need:
   - [Tenant ID (Directory ID)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview)
 
 
-### Part 1: Install Ansible
+### Part 1: Ubuntu Server > Install Ansible and tools
 In your Linux Server install Ansible and additional requeriments needed to deploy the infrastructure in Azure.\
 Note: This instructions are for Ubuntu v18.04 LTS, *you could use MacOS but you need to install ansible and python-pip using a package manger like `brew`.*
 
