@@ -4,11 +4,11 @@
 
 **Description**\
 F5 vLab environment in Azure, using a 2-NIC or 3-NIC deployment
-- mgmt VLAN, default = 10.1.10.0/24
+- Mgmt VLAN, default = 10.1.10.0/24
 - External VLAN, default = 10.1.10.0/24
 - Internal VLAN, default = 10.1.20.0/24
 - Ubuntu server with several containers (pool members), default = 10.1.10.80
-- F5 BIG-IP Best 200 Mbps 
+- F5 BIG-IP Best 200 Mbps, with LTM and ASM Provisioned. 
 
 **Requeriments**\
 To run this playbooks you need:
@@ -57,7 +57,7 @@ secret=xxxxxxxxxxxxxxxxx
 tenant=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-Note: You can use azure-cli to setup your Azure credentials
+Note: You can use azure-cli to setup your Azure credentials instead.
 
 ### Part 3: Deploy Azure infrastructure using Ansible:
 
@@ -69,6 +69,9 @@ Run the playbooks in order: (Use the correct playbook if you want to deploy a 3-
 ansible-playbook 01_deploy_rg_vnet_azure.yml
 ansible-playbook 02_deploy_ubuntu_docker_azure.yml
 ansible-playbook 03_deploy_bigip_2nic_azure.yml
+ansible-playbook 04_install_as3.yml
+ansible-playbook 05_deployservices_as3.yml
+ansible-playbook 06_get_information.yml
 ```
 <br />
 
@@ -100,11 +103,19 @@ The third playbook deploys a 2-NIC or 3-NIC BIG-IP instance (PAYG) using a suppo
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
 
-**Playbook 04 - Get Infrastructure Information**\
+**Playbook 04 - Install/Update AS3**\
+To be able to configure all of the services using AS3, version 3.20 is needed.
+Version 3.20 includes a feature to allow the same Virtual IP with different Virtual Servers (shareAddresses)
+
+**Playbook 05 - Deploy Services using AS3**\
+Deploy all the services from Playbook 02 as Virtual Servers.
+Hackazon (8443) Virtual Server includes a WAF policy. 
+
+**Playbook 06 - Get Infrastructure Information**\
 The last playbook displays information relevant for the lab, and saves that information in a local file: **info.txt**
 - Lamp Server Public IP and DNS Record
-- BIG-IP Management URL
-- Virtual Servers Public IP and DNS Record
+- BIG-IP Management IP & URL
+- Virtual Server Public IP and DNS Record
 
 <br />
 
