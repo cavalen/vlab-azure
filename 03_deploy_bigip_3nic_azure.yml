@@ -3,7 +3,7 @@
 # Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.parameters.json
 # Template v8.0.0
 
-- name: 03 - Deploy BIG-IP 3-NIC on Azure
+- name: 03 - Deploy BIG-IP 3-NIC on Azure (Management, Internal & External)
   hosts: localhost
   connection: local
   vars_files:
