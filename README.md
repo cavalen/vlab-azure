@@ -57,7 +57,7 @@ secret=xxxxxxxxxxxxxxxxx
 tenant=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-Note: You can use azure-cli to setup your Azure credentials instead.
+:heavy_check_mark: Note: You can use `azure-cli` to setup your Azure credentials instead.
 
 ### Part 3: Deploy Azure infrastructure using Ansible:
 
@@ -75,13 +75,12 @@ ansible-playbook 06_get_information.yml
 ```
 <br />
 
-If you already have an Azure Account and get a 403 error like this:
+If you already have an Azure Account and get a 403 error like this, You need to add a **Contributor Role** to your Registered Application in Azure.
 ```
 fatal: [localhost]: FAILED! => {"changed": false, "msg": "Error checking for existence of name vLAB-student - 403 Client Error:
 Forbidden for url: https://management.azure.com/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/vLAB-student?api-version=2017-05-10"}
 
 ```
-You need to add a **Contributor Role** to your Registered Application in Azure.
 
 ### Playbooks Description: 
 
@@ -103,15 +102,14 @@ The third playbook deploys a 2-NIC or 3-NIC BIG-IP instance (PAYG) using a suppo
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
 
-**Playbook 04 - Install/Update AS3**\
-To be able to configure all of the services using AS3, version 3.20 is needed.
-Version 3.20 includes a feature to allow the same Virtual IP with different Virtual Servers (shareAddresses)
+**Playbook 04: Install/Update AS3**\
+We need AS3 version 3.20 to be able to configure all of the services. This version includes a feature to allow the same Virtual IP with different Virtual Servers (shareAddresses)
 
-**Playbook 05 - Deploy Services using AS3**\
-Deploy all the services from Playbook 02 as Virtual Servers.
-Hackazon (8443) Virtual Server includes a WAF policy. 
+**Playbook 05: Deploy Services using AS3**\
+Deploy all the services from Playbook #2 as Virtual Servers.
+Hackazon (8443) Virtual Server includes a WAF policy.
 
-**Playbook 06 - Get Infrastructure Information**\
+**Playbook 06: Get Infrastructure Information**\
 The last playbook displays information relevant for the lab, and saves that information in a local file: **info.txt**
 - Lamp Server Public IP and DNS Record
 - BIG-IP Management IP & URL
