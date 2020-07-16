@@ -8,7 +8,7 @@ F5 vLab environment in Azure, using a 2-NIC or 3-NIC deployment
 - External VLAN, default = 10.1.10.0/24
 - Internal VLAN, default = 10.1.20.0/24
 - Ubuntu server with several containers (pool members), default = 10.1.10.80
-- F5 BIG-IP Best 200 Mbps, with LTM and ASM Provisioned. 
+- F5 BIG-IP Best 200 Mbps, with LTM and ASM provisioned. 
 
 **Requeriments**\
 To run this playbooks you need:
