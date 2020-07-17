@@ -4,6 +4,7 @@
 sudo apt update
 sudo apt-add-repository --yes ppa:ansible/ansible
 sudo apt install -y software-properties-common ansible docker.io docker-compose python3-pip
+sudo systemctl start docker
 echo -e "Docker, Ansible Installed"
 
 # Run containers
