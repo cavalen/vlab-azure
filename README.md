@@ -33,7 +33,7 @@ SSH into your Linux server, clone this repo, then go to `vlab-azure/` and check/
 sudo apt update
 sudo apt-add-repository --yes ppa:ansible/ansible
 sudo apt install -y software-properties-common ansible python3-pip git rpm
-sudo pip3 install boto boto3 netaddr passlib f5-sdk bigsuds deepdiff 'ansible[azure]' 
+sudo pip3 install boto3 netaddr passlib deepdiff 'ansible[azure]' 
 ansible-galaxy install f5devcentral.f5app_services_package
 
 # Install Azure CLI 
