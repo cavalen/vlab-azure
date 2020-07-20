@@ -12,7 +12,16 @@
       },
       {
         "serverTechnologyName": "Unix/Linux"
-      }
+      },
+      {
+        "serverTechnologyName": "Node.js"
+      },
+      {
+        "serverTechnologyName": "Nginx"
+      },
+      {
+        "serverTechnologyName": "Apache/NCSA HTTP Server"
+      }      
     ],
     "blocking-settings": {
       "violations": [
