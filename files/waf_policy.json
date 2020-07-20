@@ -39,6 +39,10 @@
     "policy-builder": {
       "learnOnlyFromNonBotTraffic": false
     },
+    "entityChanges": {
+        "allowedResponseCodes": [
+          400, 401, 403, 404, 407, 417, 503
+        ],
     "webhooks": [
       {
         "body": "{\"@type\":\"MessageCard\",\"@context\":\"https://schema.org/extensions\",\"summary\":\"USER: <USER> WAF POLICY APPLIED: BRANCH/TAG: <BRANCH>\",\"themeColor\":\"0078D7\",\"title\":\"<USER>: WAF POLICY APPLIED\",\"sections\":[{\"activityTitle\":\"F5 A-WAF Activity\",\"activitySubtitle\":\"WAF POLICY APPLIED: BRANCH/TAG: [<BRANCH>]\",\"activityImage\":\"https://avatars1.githubusercontent.com/u/8935905?s=200&v=4\",\"facts\":[{\"name\":\"Device Name:\",\"value\":\"{{device.hostname}}\"},{\"name\":\"Policy Name:\",\"value\":\"{{policy.name}}\"},{\"name\":\"Enforcement Mode:\",\"value\":\"{{policy.enforcementMode}}\"},{\"name\":\"Device Version:\",\"value\":\"{{device.version}}\"}]}]}",
@@ -69,10 +73,7 @@
       "description": "Delete Disallowed File Type"
     },
     {
-      "entityChanges": {
-        "allowedResponseCodes": [
-          403
-        ]
+      
       },
       "entity": {},
       "entityKind": "tm:asm:policies:general:generalstate",
