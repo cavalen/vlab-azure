@@ -59,26 +59,5 @@
         "name": "vLab_webhook_event"
       }
     ]
-  },
-  "modifications": [
-    {
-      "entityChanges": {
-        "type": "explicit"
-      },
-      "entity": {
-        "name": "bak"
-      },
-      "entityKind": "tm:asm:policies:filetypes:filetypestate",
-      "action": "delete",
-      "description": "Delete Disallowed File Type"
-    },
-    {
-      
-      },
-      "entity": {},
-      "entityKind": "tm:asm:policies:general:generalstate",
-      "action": "update-append",
-      "description": "Add 403 to Allowed Response Codes."
-    }
-  ]
+  }
 }
