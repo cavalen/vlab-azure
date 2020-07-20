@@ -30,7 +30,13 @@
           "alarm": true,
           "block": true,
           "learn": true
-        }
+        },
+        {
+          "name": "VIOL_COOKIE_MALFORMED",
+          "alarm": true,
+          "block": true,
+          "learn": true
+        }        
       ]
     },
     "signature-settings": {
@@ -39,8 +45,7 @@
     "policy-builder": {
       "learnOnlyFromNonBotTraffic": false
     },
-    "entityChanges": {
-        "allowedResponseCodes": [
+    "allowedResponseCodes": [
           400, 401, 403, 404, 407, 417, 503
         ],
     "webhooks": [
