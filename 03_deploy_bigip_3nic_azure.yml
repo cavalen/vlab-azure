@@ -2,6 +2,7 @@
 # template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.json"
 # Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.parameters.json
 # Template v8.0.0
+# imageName => Good200Mbps / Best200Mbps / AdvancedWaf200Mbps
 
 - name: 03 - Deploy BIG-IP 3-NIC on Azure (Management, Internal & External)
   hosts: localhost
