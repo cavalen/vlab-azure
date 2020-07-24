@@ -1,7 +1,7 @@
 # This file establishes the necessary resources on Azure to deploy a BIG-IP VE
 # template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.json"
 # Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
-# Template v8.0.0
+# Template v8.1.0.0
 
 - name: 03 - Deploy BIG-IP 2-NIC on Azure (Management & External)
   hosts: localhost
@@ -46,11 +46,11 @@
           numberOfExternalIps:
             value: 1
           instanceType:
-            value: "Standard_DS3_v2"
+            value: "Standard_DS2_v3"
           imageName:
-            value: "Best200Mbps"
+            value: "Best25Mbps"
           bigIpVersion:
-            value: "15.1.002000"
+            value: "15.1.004000"
           bigIpModules:
             value : "ltm:nominal,asm:nominal"
           vnetName:
