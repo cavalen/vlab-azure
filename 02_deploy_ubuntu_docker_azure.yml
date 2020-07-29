@@ -1,5 +1,7 @@
 # This file establishes the necessary resources on Azure to create a Demo Webserver using Ubuntu
 # Authentication from file $HOME/.azure/credentials
+# Template v8.1.0.0
+# imageName => Good200Mbps / Best200Mbps / AdvancedWaf200Mbps
 
 - name: 02 - Create Ubuntu Server with Docker + Apps
   hosts: localhost
