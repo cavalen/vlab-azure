@@ -30,7 +30,13 @@
           "alarm": true,
           "block": true,
           "learn": true
-        }
+        },
+        {
+          "name": "VIOL_COOKIE_MALFORMED",
+          "alarm": true,
+          "block": true,
+          "learn": true
+        }        
       ]
     },
     "signature-settings": {
@@ -39,6 +45,11 @@
     "policy-builder": {
       "learnOnlyFromNonBotTraffic": false
     },
+    "open-api-files": [
+      {
+        "link": "https://api.swaggerhub.com/apis/F5EMEASSA/Arcadia-OAS3/1.0.0-oas3"
+      }
+    ],
     "webhooks": [
       {
         "body": "{\"@type\":\"MessageCard\",\"@context\":\"https://schema.org/extensions\",\"summary\":\"USER: <USER> WAF POLICY APPLIED: BRANCH/TAG: <BRANCH>\",\"themeColor\":\"0078D7\",\"title\":\"<USER>: WAF POLICY APPLIED\",\"sections\":[{\"activityTitle\":\"F5 A-WAF Activity\",\"activitySubtitle\":\"WAF POLICY APPLIED: BRANCH/TAG: [<BRANCH>]\",\"activityImage\":\"https://avatars1.githubusercontent.com/u/8935905?s=200&v=4\",\"facts\":[{\"name\":\"Device Name:\",\"value\":\"{{device.hostname}}\"},{\"name\":\"Policy Name:\",\"value\":\"{{policy.name}}\"},{\"name\":\"Enforcement Mode:\",\"value\":\"{{policy.enforcementMode}}\"},{\"name\":\"Device Version:\",\"value\":\"{{device.version}}\"}]}]}",
@@ -55,29 +66,5 @@
         "name": "vLab_webhook_event"
       }
     ]
-  },
-  "modifications": [
-    {
-      "entityChanges": {
-        "type": "explicit"
-      },
-      "entity": {
-        "name": "bak"
-      },
-      "entityKind": "tm:asm:policies:filetypes:filetypestate",
-      "action": "delete",
-      "description": "Delete Disallowed File Type"
-    },
-    {
-      "entityChanges": {
-        "allowedResponseCodes": [
-          403
-        ]
-      },
-      "entity": {},
-      "entityKind": "tm:asm:policies:general:generalstate",
-      "action": "update-append",
-      "description": "Add 403 to Allowed Response Codes."
-    }
-  ]
+  }
 }
