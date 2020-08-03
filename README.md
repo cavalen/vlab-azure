@@ -93,7 +93,7 @@ The second playbook deploys an Ubuntu Server with Docker and the following servi
 - Port 8081 (DVWA)
 - Port 8082 (OWASP bwAPP)
 - Port 8083 (OWASP Juice Shop)
-- Port 8084 (Hello World, simple HTTP page)
+- Port 8084 (F5 HTTP page)
 - Port 8085 (NGINX default homepage)
 
 **Playbook 03: BIG-IP**\
