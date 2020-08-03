@@ -20,29 +20,14 @@ To run this playbooks you need:
   - [Tenant ID (Directory ID)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview)
 
 
-### Part 1: Ubuntu Server > Install Ansible and tools
-In your Linux Server install Ansible and additional requeriments needed to deploy the infrastructure in Azure.\
-Note: This instructions are for Ubuntu v18.04 LTS, *you could use MacOS but you need to install ansible and python-pip using a package manger like `brew`.*
-
-SSH into your Linux server, clone this repo, then go to `vlab-azure/` and check/run `install_ansible.sh`:
-
-```
-# install_ansible.sh
-
-# Install Ansible & Dependencies (For Ubuntu 18.04 LTS)
-sudo apt update
-sudo apt-add-repository --yes ppa:ansible/ansible
-sudo apt install -y software-properties-common ansible python3-pip git rpm
-sudo pip3 install boto3 netaddr passlib deepdiff 'ansible[azure]' 
-ansible-galaxy install f5devcentral.f5app_services_package
-
-# Install Azure CLI 
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+### Part 1: Download Ubuntu Container with all the necessary tools
+You need a machine with Docker. You can get Docker for Windows/Mac at [this link](https://www.docker.com/products/docker-desktop)\
+Now, use a pre-configured Docker Container running Ubuntu and Ansible to deploy the infrastructure:\
+Open an interactive console to the container: 
 
 ```
-
-:warning: ***Please reboot you linux server after installing all packages !!!*** :warning:
-<br />
+docker run -it --name ubuntu-vlab cavalen/ubuntu-vlab-18
+```
 
 ### Part 2: Configure your Azure Credentials. 
 You need your Subscription ID, Client ID, Secret and Tenant ID.
