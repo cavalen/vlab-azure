@@ -31,7 +31,7 @@
     },
     "open-api-files": [
       {
-        "link": "https://api.swaggerhub.com/apis/cavalen/starwars_api/1.0.0"
+        "link": "https://api.swaggerhub.com/apis/cavalen/starwars-api/1.0.0-oas3"
       }
     ]
   }
