@@ -3,7 +3,7 @@
     "name": "AppPolicy01",
     "description": "DECLARATIVE Policy AND WEBHOOKS",
     "template": {
-      "name": "POLICY_TEMPLATE_RAPID_DEPLOYMENT"
+      "name": "POLICY_TEMPLATE_API_SECURITY"
     },
     "enforcementMode": "blocking",
     "server-technologies": [
