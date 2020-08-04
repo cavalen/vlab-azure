@@ -1,7 +1,7 @@
 {
   "policy": {
     "name": "AppPolicy01",
-    "description": "DECLARATIVE Policy AND WEBHOOKS",
+    "description": "DECLARATIVE Policy - API Protection ",
     "template": {
       "name": "POLICY_TEMPLATE_API_SECURITY"
     },
@@ -31,7 +31,7 @@
     },
     "open-api-files": [
       {
-        "link": "https://api.swaggerhub.com/apis/cavalen/hackazon-api-2.0/1.0.0"
+        "link": "https://api.swaggerhub.com/apis/cavalen/starwars_api/1.0.0"
       }
     ]
   }
