@@ -9,6 +9,7 @@ sudo systemctl start docker
 echo -e "Docker, Ansible Installed"
 
 # Run containers
+#sudo docker run --name swapi --restart unless-stopped -d -p 8080:8000 codegazers/swapi:slim
 sudo docker run --name hackazon --restart unless-stopped -d -p 8080:80 -p 8443:443 ianwijaya/hackazon
 sudo docker run --name dvwa --restart unless-stopped -d -p 8081:80 vulnerables/web-dvwa
 sudo docker run --name bwaap --restart=unless-stopped -d -p 8082:80 raesene/bwapp
