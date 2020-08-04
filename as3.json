@@ -197,7 +197,7 @@
             },
             "vLabWAF": {
                 	"class": "WAF_Policy",
-                	"url": "https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/waf_acme.xml",
+                	"url": "https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/waf_policy.json",
                 	"ignoreChanges": true
                 }, 
             "pTlsServer_Local": {
