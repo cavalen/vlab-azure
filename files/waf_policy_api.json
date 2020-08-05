@@ -46,7 +46,8 @@
         "parameterLocation": "any",
         "performStaging": false,
         "allowEmptyValue": true
-      },
+      }
+    ],
     "open-api-files": [
       {
         "link": "https://api.swaggerhub.com/apis/cavalen/starwars-api/1.0.0-oas3"
