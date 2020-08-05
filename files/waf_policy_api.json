@@ -20,10 +20,12 @@
         "serverTechnologyName": "Nginx"
       }
     ],
-    "allowedResponseCodes": [
-      400,
-      404
-    ],
+    "general": {
+      "allowedResponseCodes": [
+        400,
+        404
+      ]
+    },
     "signature-settings": {
       "signatureStaging": false
     },
