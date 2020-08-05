@@ -49,7 +49,7 @@
       {        
         "name": "/favicon.ico",
         "method": "GET",
-        "type": "explicit"
+        "type": "explicit",
         "performStaging": false
       }    
     ],
