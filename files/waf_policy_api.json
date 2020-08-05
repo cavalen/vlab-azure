@@ -1,6 +1,6 @@
 {
   "policy": {
-    "name": "AppPolicy01",
+    "name": "vLabWAF-api",
     "description": "DECLARATIVE Policy - API Protection ",
     "template": {
       "name": "POLICY_TEMPLATE_API_SECURITY"
