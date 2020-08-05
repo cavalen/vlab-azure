@@ -6,10 +6,6 @@
       "name": "POLICY_TEMPLATE_API_SECURITY"
     },
     "enforcementMode": "blocking",
-    "allowedResponseCodes": [
-      400,
-      404
-    ],
     "server-technologies": [
       {
         "serverTechnologyName": "Django"
@@ -23,6 +19,10 @@
       {
         "serverTechnologyName": "Nginx"
       }
+    ],
+    "allowedResponseCodes": [
+      "400",
+      "404"
     ],
     "signature-settings": {
       "signatureStaging": false
