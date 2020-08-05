@@ -4,7 +4,7 @@ info:
   version: 1.0.0-oas3
   description: Star Wars API
 paths:
-  /api/allegiances:
+  /api/allegiances/:
     get:
       operationId: /api/allegiances/get
       description: Get all allegiance values
@@ -19,7 +19,7 @@ paths:
                   format: ''
       security:
         - apikeyQuery: []
-  /api/films:
+  /api/films/:
     get:
       operationId: /api/films/get
       description: Get all films.
@@ -34,7 +34,7 @@ paths:
                   $ref: '#/components/schemas/film'
       security:
         - apikeyQuery: []
-  '/api/films/{id}':
+  '/api/films/{id}/':
     get:
       operationId: '/api/films/{id}/get'
       parameters:
@@ -56,7 +56,7 @@ paths:
                   $ref: '#/components/schemas/film'
       security:
         - apikeyQuery: []
-  /api/people:
+  /api/people/:
     get:
       operationId: /api/people/get
       description: Get all people.
@@ -71,7 +71,7 @@ paths:
                   $ref: '#/components/schemas/person'
       security:
         - apikeyQuery: []
-  '/api/people/{id}':
+  '/api/people/{id}/':
     get:
       operationId: '/api/people/{id}/get'
       parameters:
@@ -93,7 +93,7 @@ paths:
                   $ref: '#/components/schemas/person'
       security:
         - apikeyQuery: []
-  /api/planets:
+  /api/planets/:
     get:
       operationId: /api/planets/get
       description: Get all planets.
@@ -108,7 +108,7 @@ paths:
                   $ref: '#/components/schemas/planet'
       security:
         - apikeyQuery: []
-  '/api/planets/{id}':
+  '/api/planets/{id}/':
     get:
       operationId: '/api/planets/{id}/get'
       parameters:
