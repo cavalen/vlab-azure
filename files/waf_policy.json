@@ -1,6 +1,6 @@
 {
   "policy": {
-    "name": "AppPolicy01",
+    "name": "vLabWAF-hackazon",
     "description": "DECLARATIVE Policy AND WEBHOOKS",
     "template": {
       "name": "POLICY_TEMPLATE_RAPID_DEPLOYMENT"
