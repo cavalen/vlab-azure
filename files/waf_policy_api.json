@@ -21,10 +21,7 @@
       }
     ],
     "general": {
-      "allowedResponseCodes": [
-        400,
-        404
-      ]
+      "allowedResponseCodes": [ 404 ]
     },
     "signature-settings": {
       "signatureStaging": false
