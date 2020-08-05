@@ -21,8 +21,8 @@
       }
     ],
     "allowedResponseCodes": [
-      "400",
-      "404"
+      400,
+      404
     ],
     "signature-settings": {
       "signatureStaging": false
