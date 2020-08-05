@@ -26,6 +26,16 @@
     "signature-settings": {
       "signatureStaging": false
     },
+    "blocking-settings": {
+      "violations": [
+        {
+          "name": "VIOL_FILETYPE",
+          "alarm": true,
+          "block": true,
+          "learn": true
+        }
+      ]
+    },    
     "policy-builder": {
       "learnOnlyFromNonBotTraffic": false
     },
@@ -44,7 +54,7 @@
         "url": "https://webhook.site/68c6505c-18dd-496d-8790-4c7d0af2fa03",
         "name": "vLab_webhook_event"
       }
-    ]    
+    ],    
     "open-api-files": [
       {
         "link": "https://api.swaggerhub.com/apis/cavalen/starwars-api/1.0.0-oas3"
