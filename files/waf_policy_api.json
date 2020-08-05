@@ -6,6 +6,7 @@
       "name": "POLICY_TEMPLATE_API_SECURITY"
     },
     "enforcementMode": "blocking",
+    "allowedResponseCodes": [404]
     "server-technologies": [
       {
         "serverTechnologyName": "Django"
@@ -53,6 +54,12 @@
         "performStaging": false
       }    
     ],
+    "data-guard": {
+      "enabled": "true",
+      "maskData": "true",
+      "creditCardNumbers": true,
+      "usSocialSecurityNumbers": false
+    },
     "open-api-files": [
       {
         "link": "https://api.swaggerhub.com/apis/cavalen/starwars-api/1.0.0-oas3"
