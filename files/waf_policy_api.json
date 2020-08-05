@@ -54,7 +54,13 @@
         "method": "GET",
         "type": "explicit",
         "performStaging": false
-      }    
+      },
+      {        
+        "name": "/static/*",
+        "method": "GET",
+        "type": "wildcard",
+        "performStaging": false
+      }
     ],
     "data-guard": {
       "enabled": "true",
