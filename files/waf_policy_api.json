@@ -8,7 +8,7 @@
     "enforcementMode": "blocking",
     "server-technologies": [
       {
-        "serverTechnologyName": "MySQL"
+        "serverTechnologyName": "Django"
       },
       {
         "serverTechnologyName": "Unix/Linux"
@@ -18,10 +18,7 @@
       },
       {
         "serverTechnologyName": "Nginx"
-      },
-      {
-        "serverTechnologyName": "Apache/NCSA HTTP Server"
-      }      
+      }
     ],
     "signature-settings": {
       "signatureStaging": false
@@ -29,9 +26,9 @@
     "blocking-settings": {
       "violations": [
         {
-          "name": "VIOL_FILETYPE",
+          "name": "VIOL_PARAMETER_EMPTY_VALUE",
           "alarm": true,
-          "block": true,
+          "block": false,
           "learn": true
         }
       ]
@@ -47,6 +44,14 @@
         "performStaging": false,
         "allowEmptyValue": true
       }
+    ],
+    "urls": [ 
+      {        
+        "name": "/favicon.ico",
+        "method": "GET",
+        "type": "explicit"
+        "performStaging": false
+      }    
     ],
     "open-api-files": [
       {
