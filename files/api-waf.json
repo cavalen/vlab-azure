@@ -26,13 +26,6 @@
       },
       "policy-builder":{
          "learnOnlyFromNonBotTraffic":false
-      },
-      "urls": [ 
-      {        
-        "name": "*",
-        "method": "GET",
-        "type": "explicit",
-        "performStaging": false
       }
    }
 }
