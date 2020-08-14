@@ -52,7 +52,7 @@ Run the playbooks in order: (Use the correct playbook if you want to deploy a 3-
 ```
 ansible-playbook 01_deploy_rg_vnet_azure.yml
 ansible-playbook 02_deploy_ubuntu_docker_azure.yml
-ansible-playbook 03_deploy_bigip_2nic_azure.yml
+ansible-playbook 03_deploy_bigip_3nic_azure.yml
 ansible-playbook 04_install_as3.yml
 ansible-playbook 05_deployservices_as3.yml
 ansible-playbook 06_get_information.yml
