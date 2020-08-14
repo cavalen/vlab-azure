@@ -6,6 +6,7 @@
          "name":"POLICY_TEMPLATE_RAPID_DEPLOYMENT"
       },
       "enforcementMode":"blocking",
+      "methods": ["GET", "POST", "PATCH", "DELETE"],
       "server-technologies":[
          {
             "serverTechnologyName":"Express.js"
@@ -25,6 +26,13 @@
       },
       "policy-builder":{
          "learnOnlyFromNonBotTraffic":false
+      },
+      "urls": [ 
+      {        
+        "name": "*",
+        "method": "GET",
+        "type": "explicit",
+        "performStaging": false
       }
    }
 }
