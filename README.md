@@ -48,7 +48,7 @@ tenant=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 Go to folder `vlab-azure`\
 Edit `config.yml` and change the `STUDENT_ID` parameter. ***Use lowercase letters and numbers only.***
 
-Run the playbooks in order: (Use the correct playbook if you want to deploy a 3-NIC BIG-IP)
+Run the playbooks in order:
 ```
 ansible-playbook 01_deploy_rg_vnet_azure.yml
 ansible-playbook 02_deploy_ubuntu_docker_azure.yml
