@@ -26,7 +26,7 @@
     set_fact:
       subnet_id: "{{subnet.subnets[0].id}}"
 
-  - name: Deploy AKS :)
+  - name: Deploying AKS :)
     azure_rm_aks:
       name: "AKS-Cluster"
       location: "{{ DEFAULT_LOCATION }}"
