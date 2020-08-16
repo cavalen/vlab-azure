@@ -1,6 +1,7 @@
 # Crear cluster AKS en subnet External
 # Retorna un error pero funciona, es por un issue 
 # https://github.com/ansible-collections/azure/issues/167 
+# Edita ssh_key si necesita acceder a los nodos 
 
 - name: Create a managed Azure Container Services (AKS) instance 
   hosts: localhost
