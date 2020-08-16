@@ -1,5 +1,5 @@
 #
-# To autenticate against Azure, create/edit the file $HOME/.azure/credentials using the following syntax:
+# To authenticate with Azure, create/edit the file $HOME/.azure/credentials using the following syntax:
 #
 # [default]
 # subscription_id=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
