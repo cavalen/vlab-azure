@@ -1,0 +1,57 @@
+# Crear cluster AKS en subnet External
+
+- name: Create a managed Azure Container Services (AKS) instance
+  hosts: localhost
+  connection: local
+  vars:
+    subnet: ""
+    subnet_id: ""
+  vars_files:
+    - ./config.yml
+
+  tasks:
+
+#  - name: Create AKS subnet
+#    azure_rm_subnet:
+#      resource_group: "{{ RESOURCE_GROUP }}"
+#      name: "sub-aks"
+#      address_prefix: "10.0.0.0/24"
+#      virtual_network: "{{ VNET1 }}"
+#    register: subnet
+
+  - name: Get External Subnet ID
+    azure_rm_subnet_info:
+      resource_group: "{{ RESOURCE_GROUP }}"
+      virtual_network_name: "{{ VNET1 }}"
+      name: "{{ SUBNET_EXT }}"
+    register: subnet
+
+  - name: Get External Subnet ID 
+  #  debug: msg="{{subnet.subnets[0].id}}"
+    set_fact:
+      subnet_id: "{{subnet.subnets[0].id}}"
+
+  - name: Deploy AKS :)
+    azure_rm_aks:
+      name: "AKS-Cluster"
+      location: "{{ DEFAULT_LOCATION }}"
+      resource_group: "{{ RESOURCE_GROUP }}"
+      dns_prefix: akslab1
+      kubernetes_version: 1.16.10
+      linux_profile:
+        admin_username: azureuser
+        ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6ykfu51NTd11ukwyXoOmGiEPVJ08Zugfk7ZrMuqMkr1ow7wvACUkBbKAekQFhwewXgCalaedS5s8xW3M7dq2GKYNHw1odUZXRfw52opy1Vo4kN3B9xtlL9JxIHq1mqkc/5NQmkrhb+RA3zALPMHssuHtqsqNCl4vcLV58Qoo7uTRXjZp4GnftyIeGpXciM1mtTIF1SQlsjnG7eoz0R+jR5jRgtb8+7DJZlS2uK+fGOnRjoHBHF6AGWp+f0FSDVb9Gss6CWJV5nt1Cc+x2o3BOyW61x6hDWSTPDeuZLeOGLR25Wzr0vlsOeT1biQydL3TYB3rJr82U+Gp1zAMNhm33
+      service_principal:
+        client_id: "{{ lookup('ini', 'client_id section=default file=~/.azure/credentials') }}"
+        client_secret: "{{ lookup('ini', 'secret section=default file=~/.azure/credentials') }}"
+      network_profile:
+        network_plugin: azure
+        service_cidr: 10.1.0.0/24
+        dns_service_ip: "10.1.0.10"
+      agent_pool_profiles:
+        - name: default
+          count: 2
+          vm_size: Standard_D2_v2
+          vnet_subnet_id: "{{subnet_id}}"
+      tags:
+        Environment: Production

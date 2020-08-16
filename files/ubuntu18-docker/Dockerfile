@@ -7,6 +7,7 @@ RUN pip3 install boto3 netaddr 'ansible[azure]' && rm -rf ~/.cache/pip/*
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb -o InstallAzureCLIDeb && bash InstallAzureCLIDeb
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -U -G sudo -u 1001 ubuntu -p "$(openssl passwd -1 ubuntu)"
 USER ubuntu
+#RUN ansible-galaxy install f5devcentral.f5app_services_package && ansible-galaxy collection install azure.azcollection --force
 RUN ansible-galaxy install f5devcentral.f5app_services_package
 WORKDIR /home/ubuntu
 RUN git clone https://github.com/cavalen/vlab-azure
