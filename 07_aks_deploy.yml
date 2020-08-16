@@ -1,4 +1,4 @@
-# Crear cluster AKS en subnet External
+# Crear cluster AKS en subnet External, version 10.16.10 compatible con F5 CIS
 # Edita ssh_key si necesita acceder a los nodos 
 
 - name: Create a managed Azure Container Services (AKS) instance 
