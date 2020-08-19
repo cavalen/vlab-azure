@@ -130,31 +130,31 @@
                 priority: 110
                 direction: Inbound
 
-    - name: Enable IP-Forwording for Internal Interface
-      azure_rm_networkinterface:
-        location: "{{ DEFAULT_LOCATION }}"
-        resource_group: "{{ RESOURCE_GROUP }}"
-        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-int"
-        virtual_network: "{{ VNET1 }}"
-        subnet: "{{ SUBNET_INT }}"
-        enable_ip_forwarding: True
-        ip_configurations: 
-          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ipconfig1"
+#    - name: Enable IP-Forwording for Internal Interface
+#      azure_rm_networkinterface:
+#        location: "{{ DEFAULT_LOCATION }}"
+#        resource_group: "{{ RESOURCE_GROUP }}"
+#        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-int"
+#        virtual_network: "{{ VNET1 }}"
+#        subnet: "{{ SUBNET_INT }}"
+#        enable_ip_forwarding: True
+#        ip_configurations: 
+#          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ipconfig1"
 
-    - name: Enable IP-Forwording for External Interface
-      azure_rm_networkinterface:
-        location: "{{ DEFAULT_LOCATION }}"
-        resource_group: "{{ RESOURCE_GROUP }}"
-        security_group: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
-        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext"
-        virtual_network: "{{ VNET1 }}"
-        subnet: "{{ SUBNET_EXT }}"
-        enable_ip_forwarding: True
-        ip_configurations:
-          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-ipconfig"
-            primary: True
-            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-pip0"
-          - name: "{{ RESOURCE_GROUP }}-ext-ipconfig0"
-            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
+#    - name: Enable IP-Forwording for External Interface
+#      azure_rm_networkinterface:
+#        location: "{{ DEFAULT_LOCATION }}"
+#        resource_group: "{{ RESOURCE_GROUP }}"
+#        security_group: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
+#        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext"
+#        virtual_network: "{{ VNET1 }}"
+#        subnet: "{{ SUBNET_EXT }}"
+#        enable_ip_forwarding: True
+#        ip_configurations:
+#          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-ipconfig"
+#            primary: True
+#           public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-pip0"
+#          - name: "{{ RESOURCE_GROUP }}-ext-ipconfig0"
+#            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
