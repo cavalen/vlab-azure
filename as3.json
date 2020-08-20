@@ -60,22 +60,22 @@
                }]
             }
          },
-         "vs_bwAPP_8082": {
+         "vs_juice_8082": {
             "class": "Application",
             "template": "generic",
-            "vs_bwAPP_8082": {
+            "vs_juice_8083": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
                ],
-               "pool": "pool_bwapp",
+               "pool": "pool_juice",
                "virtualPort": 8082,
                "shareAddresses": true
             },
-            "pool_bwapp": {
+            "pool_juice": {
                "class": "Pool",
                "monitors": [
-                  "tcp"
+                  "http"
                ],
                "members": [{
                   "servicePort": 8082,
@@ -85,19 +85,19 @@
                }]
             }
          },
-         "vs_juice_8083": {
+         "vs_f5demoapp_8083": {
             "class": "Application",
             "template": "generic",
-            "vs_juice_8083": {
+            "vs_f5demoapp_8083": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
                ],
-               "pool": "pool_juice",
+               "pool": "pool_f5demoapp",
                "virtualPort": 8083,
                "shareAddresses": true
             },
-            "pool_juice": {
+            "pool_f5demoapp": {
                "class": "Pool",
                "monitors": [
                   "http"
@@ -110,19 +110,19 @@
                }]
             }
          },
-         "vs_helloworld_8084": {
+         "vs_nginx_8084": {
             "class": "Application",
             "template": "generic",
-            "vs_helloworld_8084": {
+            "vs_nginx_8085": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
                ],
-               "pool": "pool_helloworld",
+               "pool": "pool_nginx",
                "virtualPort": 8084,
                "shareAddresses": true
             },
-            "pool_helloworld": {
+            "pool_nginx": {
                "class": "Pool",
                "monitors": [
                   "http"
@@ -135,22 +135,22 @@
                }]
             }
          },
-         "vs_nginx_8085": {
+         "vs_bwAPP_8085": {
             "class": "Application",
             "template": "generic",
-            "vs_nginx_8085": {
+            "vs_bwAPP_8082": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
                ],
-               "pool": "pool_nginx",
+               "pool": "pool_bwapp",
                "virtualPort": 8085,
                "shareAddresses": true
             },
-            "pool_nginx": {
+            "pool_bwapp": {
                "class": "Pool",
                "monitors": [
-                  "http"
+                  "tcp"
                ],
                "members": [{
                   "servicePort": 8085,
@@ -159,7 +159,7 @@
                   ]
                }]
             }
-         },
+         },         
          "vs_hackazon_https_waf_8443": {
             "class": "Application",
             "template": "generic",
