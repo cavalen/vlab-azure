@@ -123,5 +123,12 @@
                 access: Allow
                 priority: 110
                 direction: Inbound
+              - name: 'Allow_TCP_3000'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: 3000
+                access: Allow
+                priority: 112
+                direction: Inbound                
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
