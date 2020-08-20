@@ -63,7 +63,7 @@
          "vs_juice_8082": {
             "class": "Application",
             "template": "generic",
-            "vs_juice_8083": {
+            "vs_juice_8082": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
@@ -113,7 +113,7 @@
          "vs_nginx_8084": {
             "class": "Application",
             "template": "generic",
-            "vs_nginx_8085": {
+            "vs_nginx_8084": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
@@ -138,7 +138,7 @@
          "vs_bwAPP_8085": {
             "class": "Application",
             "template": "generic",
-            "vs_bwAPP_8082": {
+            "vs_bwAPP_8085": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
