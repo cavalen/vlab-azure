@@ -52,7 +52,7 @@ Run the playbooks in order:
 ```
 ansible-playbook 01_deploy_rg_vnet_azure.yml
 ansible-playbook 02_deploy_ubuntu_docker_azure.yml
-ansible-playbook 03_deploy_bigip_3nic_azure.yml
+ansible-playbook 03_deploy_bigip_2nic_azure.yml
 ansible-playbook 04_install_as3.yml
 ansible-playbook 05_deployservices_as3.yml
 ansible-playbook 06_get_information.yml
@@ -73,13 +73,13 @@ The first playbook creates a Resource Group, a Security Group and a VNET (10.1.0
 
 **Playbook 02: Ubuntu Docker Server**\
 The second playbook deploys an Ubuntu Server with Docker and the following services, used as Pool members: 
-- Port 8080   (Hackazon)
-- Port 8443  (Hackazon HTTPS)
+- Port 8080 (Hackazon)
+- Port 8443 (Hackazon HTTPS)
 - Port 8081 (DVWA)
-- Port 8082 (OWASP bwAPP)
-- Port 8083 (OWASP Juice Shop)
-- Port 8084 (F5 HTTP page)
-- Port 8085 (NGINX default homepage)
+- Port 8082 (OWASP Juice Shop)
+- Port 8083 (F5 DemoApp)
+- Port 8084 (NGINX default homepage)
+- Port 8085 (OWASP bwAPP, run /install.php to start)
 
 **Playbook 03: BIG-IP**\
 The third playbook deploys a 2-NIC or 3-NIC BIG-IP instance (PAYG) using a supported ARM template:\
@@ -92,8 +92,8 @@ We need AS3 version 3.20 to be able to configure all of the services. This versi
 
 **Playbook 05: Deploy Services using AS3**\
 Deploy all the services from Playbook #2 as Virtual Servers.\
-Hackazon (8443) Virtual Server includes a WAF policy.\
-as3.json is referenced by this playbook, and is the input for our declarative API\
+Hackazon (8443) Virtual Server includes a Declarative WAF policy.\
+as3.json is referenced by this playbook, and is the input for our declarative Rest API\
 
 **Playbook 06: Get Infrastructure Information**\
 The last playbook displays information relevant for the lab, and saves that information in a local file: **info.txt**
@@ -103,7 +103,6 @@ The last playbook displays information relevant for the lab, and saves that info
 
 <br />
 
-  
 ## :heavy_exclamation_mark: DELETING THE LAB :heavy_exclamation_mark:
 Do not forget to delete the resources created to avoid unwanted charges.
 
