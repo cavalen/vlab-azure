@@ -26,7 +26,7 @@
 
   - name: Deploying AKS :)
     azure_rm_aks:
-      name: "AKS-Cluster"
+      name: "AKS-Cluster-{{STUDENT_ID}}"
       location: "{{ DEFAULT_LOCATION }}"
       resource_group: "{{ RESOURCE_GROUP }}"
       dns_prefix: akslab1
