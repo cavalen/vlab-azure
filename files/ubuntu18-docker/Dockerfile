@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 #ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=America/New_York
+ENV TZ=America/Bogota
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update && apt install -y software-properties-common sudo openssl git python3-pip unzip rpm curl wget nano &&  apt-add-repository --yes ppa:ansible/ansible && apt install -y ansible && apt-get clean
 RUN pip3 install boto3 netaddr 'ansible[azure]' && rm -rf ~/.cache/pip/*
