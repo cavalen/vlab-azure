@@ -37,7 +37,7 @@
       name: "AKS-Cluster-{{STUDENT_ID}}"
       location: "{{ DEFAULT_LOCATION }}"
       resource_group: "{{ RESOURCE_GROUP }}"
-      dns_prefix: akslab1
+      dns_prefix: dns-akslab-{{STUDENT_ID}}
       kubernetes_version: 1.16.10
       linux_profile:
         admin_username: azureuser
