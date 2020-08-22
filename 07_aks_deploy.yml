@@ -7,6 +7,7 @@
   vars:
     subnet: ""
     subnet_id: ""
+    law: ""
   vars_files:
     - ./config.yml
 
@@ -24,6 +25,13 @@
     set_fact:
       subnet_id: "{{subnet.subnets[0].id}}"
 
+  - name: Create Log Analytics Workspace for AKS logs
+    azure_rm_loganalyticsworkspace:
+      resource_group: "{{ RESOURCE_GROUP }}"
+      name: "myLogAnalyticsWorkspace-{{STUDENT_ID}}"
+      sku: per_node
+    register: law
+   
   - name: Deploying AKS :)
     azure_rm_aks:
       name: "AKS-Cluster-{{STUDENT_ID}}"
@@ -34,6 +42,10 @@
       linux_profile:
         admin_username: azureuser
         ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6ykfu51NTd11ukwyXoOmGiEPVJ08Zugfk7ZrMuqMkr1ow7wvACUkBbKAekQFhwewXgCalaedS5s8xW3M7dq2GKYNHw1odUZXRfw52opy1Vo4kN3B9xtlL9JxIHq1mqkc/5NQmkrhb+RA3zALPMHssuHtqsqNCl4vcLV58Qoo7uTRXjZp4GnftyIeGpXciM1mtTIF1SQlsjnG7eoz0R+jR5jRgtb8+7DJZlS2uK+fGOnRjoHBHF6AGWp+f0FSDVb9Gss6CWJV5nt1Cc+x2o3BOyW61x6hDWSTPDeuZLeOGLR25Wzr0vlsOeT1biQydL3TYB3rJr82U+Gp1zAMNhm33
+      addon:
+        monitoring:
+          enabled: yes
+          log_analytics_workspace_resource_id: "{{law.id}}"
       service_principal:
         client_id: "{{ lookup('ini', 'client_id section=default file=~/.azure/credentials') }}"
         client_secret: "{{ lookup('ini', 'secret section=default file=~/.azure/credentials') }}" 
