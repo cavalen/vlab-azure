@@ -32,7 +32,7 @@ curl https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/docker-co
 cd /home/f5student/kafka-docker/
 sudo docker-compose up -d
 
-# Book Catalog API - Lab API Protection
+# Book Catalog API - Lab API Protection - Port TCP:3000
 cd /home/f5student/
 git clone https://github.com/cavalen/bookscatalog
 cd ./bookscatalog
