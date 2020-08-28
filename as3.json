@@ -60,19 +60,19 @@
                }]
             }
          },
-         "vs_juice_8082": {
+         "vs_f5demoapp_8082": {
             "class": "Application",
             "template": "generic",
-            "vs_juice_8082": {
+            "vs_f5demoapp_8082": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
                ],
-               "pool": "pool_juice",
+               "pool": "pool_f5demoapp",
                "virtualPort": 8082,
                "shareAddresses": true
             },
-            "pool_juice": {
+            "pool_f5demoapp": {
                "class": "Pool",
                "monitors": [
                   "http"
@@ -85,19 +85,19 @@
                }]
             }
          },
-         "vs_f5demoapp_8083": {
+         "vs_juice_8083": {
             "class": "Application",
             "template": "generic",
-            "vs_f5demoapp_8083": {
+            "vs_juice_8083": {
                "class": "Service_HTTP",
                "virtualAddresses": [
                   "10.1.10.246"
                ],
-               "pool": "pool_f5demoapp",
+               "pool": "pool_juice",
                "virtualPort": 8083,
                "shareAddresses": true
             },
-            "pool_f5demoapp": {
+            "pool_juice": {
                "class": "Pool",
                "monitors": [
                   "http"
