@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 ENV TZ=America/Bogota
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt update && apt install -y --no-install-recommends tzdata software-properties-common sudo openssl git python3-pip python3-setuptools python3-wheel unzip rpm curl wget nano\
+RUN apt update && apt install -y --no-install-recommends tzdata software-properties-common sudo openssl openssh-client git python3-pip python3-setuptools python3-wheel unzip rpm curl wget nano\
  &&  apt-add-repository --yes ppa:ansible/ansible\
  && apt install -y --no-install-recommends ansible\
  && pip3 install boto3 netaddr 'ansible[azure]' \
