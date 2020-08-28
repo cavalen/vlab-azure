@@ -15,14 +15,6 @@ sudo docker run --name juice-shop --restart=unless-stopped -d -p 8083:3000 bkimm
 #sudo docker run --name nginx01 --restart=unless-stopped -d -p 8084:80 nginx:latest
 #sudo docker run --name bwaap --restart=unless-stopped -d -p 8085:80 raesene/bwapp
 
-# Arcadia
-#sudo docker network create internal
-#sudo docker run -dit -h mainapp --name=mainapp --net=internal --restart unless-stopped registry.gitlab.com/mattdierick/arcadia-finance/mainapp:latest
-#sudo docker run -dit -h backend --name=backend --net=internal --restart unless-stopped registry.gitlab.com/mattdierick/arcadia-finance/backend:latest
-#sudo docker run -dit -h app2 --name=app2 --net=internal --restart unless-stopped registry.gitlab.com/mattdierick/arcadia-finance/app2:latest
-#sudo docker run -dit -h app3 --name=app3 --net=internal --restart unless-stopped registry.gitlab.com/mattdierick/arcadia-finance/app3:latest
-#sudo docker run -dit -h nginx --name=nginx --net=internal --restart unless-stopped -p 80:80 -v /home/ubuntu/arcadia/default.conf:/etc/nginx/conf.d/default.conf registry.gitlab.com/mattdierick/arcadia-finance/nginx_oss:latest
-
 # Kafka Container - for Telemetry Streaming
 cd /home/f5student/
 git clone https://github.com/wurstmeister/kafka-docker
