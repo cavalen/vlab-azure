@@ -26,7 +26,7 @@ Now, use a pre-configured Docker Container running Ubuntu and Ansible to deploy 
 Open an interactive console to the container: 
 
 ```
-docker run -it --name ubuntu-vlab cavalen/ubuntu-vlab-18
+docker run -it --name ubuntu-vlab cavalen/ubuntu18-vlab
 ```
 
 ### Part 2: Configure your Azure Credentials. 
