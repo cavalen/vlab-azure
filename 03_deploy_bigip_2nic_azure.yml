@@ -1,4 +1,4 @@
-# This file establishes the necessary resources on Azure to deploy a BIG-IP VE
+# Deploy a 2-NIC BIG-IP VE
 # template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.json"
 # Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
 # Template v8.1.0.0
