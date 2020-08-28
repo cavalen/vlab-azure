@@ -114,6 +114,12 @@ Go to `./vlab-azure` and run:
 ansible_playbook 99_delete_lab_azure.yml
 ```
 <br />
+
+ToDo: \
+- Do not use an ARM template to deploy BIG-IP, instead create the VM from scratch
+- Use the same NSG for BIG-IP and Ubuntu Server
+
+<br />
 <br />
 <br />
   
