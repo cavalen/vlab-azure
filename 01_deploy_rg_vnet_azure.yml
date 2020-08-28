@@ -1,4 +1,4 @@
-# This file establishes the necessary resources on Azure to create a Demo Webserver using Ubuntu
+# Deploy a Resource Group, VNET, Subnets, NSG
 # Authentication from file $HOME/.azure/credentials
 
 - name: 01 - Create Resource Group and VNET
