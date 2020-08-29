@@ -11,10 +11,10 @@
     - ./config.yml
 
   tasks:
-  
+
     - name: STARTING NOW ...
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
-      
+
     - name: Getting your Public IP Address
       local_action:
         module: uri
@@ -31,7 +31,7 @@
 
     - name: Your Public IP Net for allowed Inbound traffic
       debug: var=ALLOWED_SRC_ADDRESS
-      
+
     - name: Create Resource Group {{ RESOURCE_GROUP }}
       azure_rm_resourcegroup:
         name: "{{ RESOURCE_GROUP }}"
@@ -64,67 +64,21 @@
         address_prefix: "{{ INT_PREFIX }}"
         virtual_network: "{{ VNET1 }}"
 
-    - name: Create {{ NODE_NAME }}-{{ STUDENT_ID }}-sg0 Security Group
+    - name: Create vlab-{{ STUDENT_ID }}-sg0 Security Group
       azure_rm_securitygroup:
           resource_group: "{{ RESOURCE_GROUP }}"
-          name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-sg0"
-          purge_rules: yes
+          name: "vlab-{{ STUDENT_ID }}-sg0"
+          purge_rules: no
           rules:
-              - name: 'Allow_SSH'
+              - name: 'Allow_TCP_{{item}}'
                 protocol: Tcp
                 source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 22
+                destination_port_range: "{{item}}"
                 access: Allow
-                priority: 100
+                priority: "{{ my_idx|int + 100 }}"
                 direction: Inbound
-              - name: 'Allow_HTTP_80'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 80
-                access: Allow
-                priority: 101
-                direction: Inbound
-              - name: 'Allow_HTTPS_443'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 443
-                access: Allow
-                priority: 102
-                direction: Inbound
-              - name: 'Allow_TCP_2181_kafka'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 2181
-                access: Allow
-                priority: 103
-                direction: Inbound  
-              - name: 'Allow_TCP_9092_kafka'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 9092
-                access: Allow
-                priority: 104
-                direction: Inbound                     
-              - name: 'Allow_TCP_8080_to_8089'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 8080-8089
-                access: Allow
-                priority: 105
-                direction: Inbound
-              - name: 'Allow_TCP_8443'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 8443
-                access: Allow
-                priority: 106
-                direction: Inbound
-              - name: 'Allow_TCP_3000'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 3000
-                access: Allow
-                priority: 108
-                direction: Inbound     
+      loop: "{{ALLOWED_PORTS}}"
+      loop_control:
+        index_var: my_idx
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
