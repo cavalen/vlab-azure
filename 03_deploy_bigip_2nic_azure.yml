@@ -12,7 +12,7 @@
     - ./config.yml
 
   tasks:
-    - name: Starting Now ... Deploying 2-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...   
+    - name: Starting Now ... Deploying 2-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
 
     - name: Getting your Public IP Address
@@ -27,7 +27,7 @@
       set_fact:
         #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
         ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
-        
+
     - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
       azure_rm_deployment:
         state: present
@@ -57,7 +57,7 @@
             value : "ltm:nominal,asm:nominal"
           vnetName:
             value: "{{ VNET1 }}"
-          vnetResourceGroupName: 
+          vnetResourceGroupName:
             value: "{{ RESOURCE_GROUP }}"
           mgmtSubnetName:
             value: "{{ SUBNET_MGMT }}"
@@ -68,69 +68,44 @@
           externalIpAddressRangeStart:
             value: "{{ BIGIP_ADDRESS_EXT }}"
           avSetChoice:
-            value: "CREATE_NEW"   
+            value: "CREATE_NEW"
           zoneChoice:
-            value: "1"            
+            value: "1"
           provisionPublicIP:
             value: "Yes"
           declarationUrl:
-            value: "NOT_SPECIFIED"      
+            value: "NOT_SPECIFIED"
           ntpServer:
             value: "0.pool.ntp.org"
           timeZone:
             value: "UTC"
-          customImageUrn: 
+          customImageUrn:
             value: "OPTIONAL"
           customImage:
             value: "OPTIONAL"
           restrictedSrcAddress:
             value: "{{ ALLOWED_SRC_ADDRESS }}"
-          tagValues: 
+          tagValues:
             value: {"application":"APP","cost":"COST","environment":"ENV","group":"GROUP","owner":"OWNER"}
           allowUsageAnalytics:
             value: "No"
           allowPhoneHome:
             value: "Yes"
 
-    - name: Modify BIG-IP Network Security Group with new rules ({{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg)
+    - name: Modify BIG-IP Network Security Group {{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg
       azure_rm_securitygroup:
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
         rules:
-              - name: 'Allow_HTTP_80'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 80
-                access: Allow
-                priority: 104
-                direction: Inbound
-              - name: 'Allow_HTTPS_443'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 443
-                access: Allow
-                priority: 106
-                direction: Inbound                
-              - name: 'Allow_TCP_8080_8089'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 8080-8089
-                access: Allow
-                priority: 108
-                direction: Inbound
-              - name: 'Allow_TCP_8443'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 8443
-                access: Allow
-                priority: 110
-                direction: Inbound
-              - name: 'Allow_TCP_3000'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: 3000
-                access: Allow
-                priority: 112
-                direction: Inbound                
+            - name: 'Allow_TCP_{{item}}'
+              protocol: Tcp
+              source_address_prefix: "{{ ALLOWED_SRC_ADDRESS }}"
+              destination_port_range: "{{item}}"
+              access: Allow
+              priority: "{{ my_idx|int + 100 }}"
+              direction: Inbound
+      loop: "{{ALLOWED_PORTS}}"
+      loop_control:
+        index_var: my_idx
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
