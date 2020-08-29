@@ -45,7 +45,7 @@ ADMINPASSWORD: f5DEMOs4uLATAM
 
 # Network Security Group config, for BIG-IP and Server ... 
 # ALLOWED_PORTS: [80,443,8080-8085]
-ALLOWED_PORTS: [22,80,443,8080-8086,8443]
+ALLOWED_PORTS: [22,80,443,8080-8086,8443,3000]
 ALLOWED_SRC_ADDRESS: "0.0.0.0/0"
 
 # This lab uses a PAYG template for BIG-IP. No need for license
