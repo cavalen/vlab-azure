@@ -11,7 +11,7 @@
 
   tasks:
 
-    - name: Starting Now ... THIS CAN TAKE SOME TIME (10-15 MIN) ... HAVE A COFFEE AND RELAX!
+    - name: Starting Now ... 
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
 
     - name: Create Server NIC {{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0 with Security Group vlab-{{ STUDENT_ID }}-sg0
@@ -66,8 +66,10 @@
         publisher: Microsoft.Azure.Extensions
         virtual_machine_extension_type: CustomScript
         type_handler_version: "2.0"
-        #settings: '{"commandToExecute": "sudo apt-get update ; sudo apt-get install -y docker docker-compose ; sudo docker run --name hackazon --restart unless-stopped -d -p 8080:80 -p 8443:443 ianwijaya/hackazon ; sudo docker run --name nginx01 --restart=unless-stopped -d -p 8081:80 nginx:latest; sudo docker run --name dvwa --restart unless-stopped -d -p 8082:80 vulnerables/web-dvwa; sudo docker run --name f5helloworld --restart unless-stopped -d -p 8083:8080 f5devcentral/f5-hello-world; sudo docker run --name juice-shop --restart=unless-stopped -d -p 8084:3000 bkimminich/juice-shop "}'
-        settings: '{"fileUris": ["https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/config_server.sh"], "commandToExecute": "sh config_server.sh"}'
+        #settings: '{"commandToExecute": "sudo apt-get update ; sudo apt-get install -y docker docker-compose ; sudo docker run --name hackazon --restart unless-stopped -d -p 8080:80 -p 8443:443 ianwijaya/hackazon "}'
+        settings: '{"fileUris": ["https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/config_server.sh"], "commandToExecute": "nohup sh config_server.sh </dev/null >/dev/null 2>&1 & "}'
         auto_upgrade_minor_version: false
+
+    - debug: msg="NOTE: Server is installing software in the background, It can take 10-15 min for all services to be available"
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
