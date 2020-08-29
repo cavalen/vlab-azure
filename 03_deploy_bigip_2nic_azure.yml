@@ -109,3 +109,147 @@
         index_var: my_idx
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
+ubuntu@cbbe946bb485:~/vlab-azure$
+ubuntu@cbbe946bb485:~/vlab-azure$ cat 03_deploy_bigip_3nic_azure.yml
+# Deploy a 3-NIC BIG-IP VE
+# template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.json"
+# Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.parameters.json
+# Template v8.1.0.0
+# imageName => Good200Mbps / Best200Mbps / AdvancedWaf200Mbps
+# if imageName is AdvancedWaf200Mbps ==> bigIpModules = "asm:nominal,fps:nominal"
+
+- name: 03 - Deploy BIG-IP 3-NIC on Azure (Management, Internal & External)
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ./config.yml
+
+  tasks:
+    - name: Starting Now ... Deploying 3-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...
+      debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
+
+    - name: Getting your Public IP Address
+      local_action:
+        module: uri
+        url: http://checkip.amazonaws.com
+        return_content: yes
+      register: local_ip
+      failed_when: not local_ip.content | regex_search ('(\d+).(\d+).(\d+).(\d+)\n')
+
+    - name: Set Public Network Variable
+      set_fact:
+        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
+        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
+
+    - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
+      azure_rm_deployment:
+        state: present
+        resource_group_name: "{{ RESOURCE_GROUP }}"
+        location: "{{ DEFAULT_LOCATION }}"
+        template_link: "https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/template_bigip-3nic-payg.json"
+        parameters:
+          adminUsername:
+            value: "{{ ADMINUSERNAME }}"
+          authenticationType:
+            value: "password"
+          adminPasswordOrKey:
+            value: "{{ ADMINPASSWORD }}"
+          dnsLabel:
+            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
+          instanceName:
+            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
+          numberOfExternalIps:
+            value: 1
+          instanceType:
+            value: "Standard_DS3_v2"
+          imageName:
+            value: "Best200Mbps"
+          bigIpVersion:
+            value: "15.1.004000"
+          bigIpModules:
+            value : "ltm:nominal,asm:nominal"
+          vnetName:
+            value: "{{ VNET1 }}"
+          vnetResourceGroupName:
+            value: "{{ RESOURCE_GROUP }}"
+          mgmtSubnetName:
+            value: "{{ SUBNET_MGMT }}"
+          mgmtIpAddress:
+            value: "{{ BIGIP_ADDRESS_MGMT }}"
+          externalSubnetName:
+            value: "{{ SUBNET_EXT }}"
+          externalIpAddressRangeStart:
+            value: "{{ BIGIP_ADDRESS_EXT }}"
+          internalSubnetName:
+            value: "{{ SUBNET_INT }}"
+          internalIpAddress:
+            value: "{{ BIGIP_ADDRESS_INT }}"
+          avSetChoice:
+            value: "CREATE_NEW"
+          zoneChoice:
+            value: "1"
+          provisionPublicIP:
+            value: "Yes"
+          declarationUrl:
+            value: "NOT_SPECIFIED"
+          ntpServer:
+            value: "0.pool.ntp.org"
+          timeZone:
+            value: "UTC"
+          customImageUrn:
+            value: "OPTIONAL"
+          customImage:
+            value: "OPTIONAL"
+          restrictedSrcAddress:
+            value: "{{ ALLOWED_SRC_ADDRESS }}"
+          tagValues:
+            value: {"application":"APP","cost":"COST","environment":"ENV","group":"GROUP","owner":"OWNER"}
+          allowUsageAnalytics:
+            value: "No"
+          allowPhoneHome:
+            value: "Yes"
+
+    - name: Modify BIG-IP Network Security Group with new rules ({{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg)
+      azure_rm_securitygroup:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
+        rules:
+              - name: 'Allow_TCP_{{item}}'
+                protocol: Tcp
+                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
+                destination_port_range: "{{item}}"
+                access: Allow
+                priority: "{{ my_idx|int + 100 }}"
+                direction: Inbound
+      loop: "{{ALLOWED_PORTS}}"
+      loop_control:
+        index_var: my_idx
+
+#    - name: Enable IP-Forwording for Internal Interface
+#      azure_rm_networkinterface:
+#        location: "{{ DEFAULT_LOCATION }}"
+#        resource_group: "{{ RESOURCE_GROUP }}"
+#        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-int"
+#        virtual_network: "{{ VNET1 }}"
+#        subnet: "{{ SUBNET_INT }}"
+#        enable_ip_forwarding: True
+#        ip_configurations:
+#          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ipconfig1"
+
+#    - name: Enable IP-Forwording for External Interface
+#      azure_rm_networkinterface:
+#        location: "{{ DEFAULT_LOCATION }}"
+#        resource_group: "{{ RESOURCE_GROUP }}"
+#        security_group: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
+#        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext"
+#        virtual_network: "{{ VNET1 }}"
+#        subnet: "{{ SUBNET_EXT }}"
+#        enable_ip_forwarding: True
+#        ip_configurations:
+#          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-ipconfig"
+#            primary: True
+#           public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-pip0"
+#          - name: "{{ RESOURCE_GROUP }}-ext-ipconfig0"
+#            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
+
+    - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
