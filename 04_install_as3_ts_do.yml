@@ -1,8 +1,9 @@
 # Update/Install AS3 & TS RPM
 # AS3 version 3.20.0
-# TS version 1.12.0
+# TS version 1.13.0
+# DO version 1.14.0
 
-- name: 05 Install AS3 RPM
+- name: 05 Install AS3, TS & DO RPMs
   hosts: localhost
   connection: local
   vars:
@@ -42,5 +43,12 @@
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
-        f5app_services_package_url: "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.12.0/f5-telemetry-1.12.0-3.noarch.rpm"
-        f5app_services_package_path: "/tmp/f5-telemetry-1.12.0-3.noarch.rpm"
+        f5app_services_package_url: "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.12.0/f5-telemetry-1.13.0-2.noarch.rpm"
+        f5app_services_package_path: "/tmp/f5-telemetry-1.13.0-2.noarch.rpm"
+
+    - name: Download and Install Declarative Onboarding (DO) RPM
+      include_role:
+        name: f5devcentral.f5app_services_package
+      vars:
+        f5app_services_package_url: "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.14.0/f5-declarative-onboarding-1.14.0-1.noarch.rpm"
+        f5app_services_package_path: "/tmp/f5-declarative-onboarding-1.14.0-1.noarch.rpm"
