@@ -1,7 +1,7 @@
 # Deploy a 3-NIC BIG-IP VE
 # template_link is a copy of: https://github.com/F5Networks/f5-azure-arm-templates/blob/v8.1.1.0/supported/standalone/3nic/existing-stack/payg/azuredeploy.json
 # Template parameters from: https://github.com/F5Networks/f5-azure-arm-templates/blob/v8.1.1.0/supported/standalone/3nic/existing-stack/payg/azuredeploy.json
-# Template v8.1.0.0
+# Template v8.1.1.0
 # imageName => Good200Mbps / Best200Mbps / AdvancedWaf200Mbps
 # if imageName is AdvancedWaf200Mbps ==> bigIpModules = "asm:nominal,fps:nominal"
 
