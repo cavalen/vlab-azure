@@ -50,7 +50,7 @@
           instanceType:
             value: "Standard_DS3_v2"
           imageName:
-            value: "Best200Mbps"
+            value: "Best25Mbps"
           bigIpVersion:
             value: "15.1.004000"
           bigIpModules:
