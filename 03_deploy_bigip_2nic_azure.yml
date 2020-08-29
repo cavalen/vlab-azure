@@ -48,7 +48,7 @@
           numberOfExternalIps:
             value: 1
           instanceType:
-            value: "Standard_DS3_v2"
+            value: "Standard_DS2_v2"
           imageName:
             value: "Best25Mbps"
           bigIpVersion:
