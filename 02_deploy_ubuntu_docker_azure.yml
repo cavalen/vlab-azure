@@ -14,11 +14,11 @@
     - name: Starting Now ... THIS CAN TAKE SOME TIME (10-15 MIN) ... HAVE A COFFEE AND RELAX!
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
 
-    - name: Create Server NIC {{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0 with Security Group {{ NODE_NAME }}-{{ STUDENT_ID }}-sg0
+    - name: Create Server NIC {{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0 with Security Group vlab-{{ STUDENT_ID }}-sg0
       azure_rm_networkinterface:
         location: "{{ DEFAULT_LOCATION }}"
         resource_group: "{{ RESOURCE_GROUP }}"
-        security_group: "{{ NODE_NAME }}-{{ STUDENT_ID }}-sg0"
+        security_group: "vlab-{{ STUDENT_ID }}-sg0"
         name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0"
         virtual_network: "{{ VNET1 }}"
         subnet: "{{ SUBNET_EXT }}"
@@ -40,7 +40,7 @@
         location: "{{ DEFAULT_LOCATION }}"
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "{{ NODE_NAME }}-{{ STUDENT_ID }}"
-        vm_size: Standard_B2ms
+        vm_size: Standard_B2s
         #managed_disk_type: Standard_LRS
         managed_disk_type: Premium_LRS
         admin_username: "{{ NODE_USER }}"
