@@ -32,7 +32,7 @@
       set_fact:
         bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
 
-    - name: Download and Install AS3 RPM
+    - name: Download and Install Application Services 3 (AS3) RPM
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
