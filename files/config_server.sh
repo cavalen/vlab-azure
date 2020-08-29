@@ -11,7 +11,7 @@ echo -e "Docker, Ansible Installed"
 sudo docker run --name hackazon --restart unless-stopped -d -p 8080:80 -p 8443:443 ianwijaya/hackazon
 sudo docker run --name dvwa --restart unless-stopped -d -p 8081:80 vulnerables/web-dvwa
 sudo docker run --name f5demoapp --restart unless-stopped -d -p 8082:80 -e F5DEMO_APP=website f5devcentral/f5-demo-httpd:nginx
-sudo docker run --name juice-shop --restart=unless-stopped -d -p 8083:3000 bkimminich/juice-shop
+#sudo docker run --name juice-shop --restart=unless-stopped -d -p 8083:3000 bkimminich/juice-shop
 #sudo docker run --name nginx01 --restart=unless-stopped -d -p 8084:80 nginx:latest
 #sudo docker run --name bwaap --restart=unless-stopped -d -p 8085:80 raesene/bwapp
 
