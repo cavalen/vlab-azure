@@ -1,255 +1,73 @@
-# Deploy a 2-NIC BIG-IP VE
-# template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.json"
-# Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
-# Template v8.1.0.0
-# imageName => Good200Mbps / Best200Mbps / AdvancedWaf200Mbps
-# if imageName is AdvancedWaf200Mbps ==> bigIpModules = "asm:nominal,fps:nominal"
+# This file establishes the necessary resources on Azure to create a Demo Webserver using Ubuntu
+# Authentication from file $HOME/.azure/credentials
 
-- name: 03 - Deploy BIG-IP 2-NIC on Azure (Management & External)
+- name: 02 - Create Ubuntu Server with Docker + Apps
   hosts: localhost
   connection: local
+  vars:
+    date: "{{ lookup('pipe', 'date +%Y%m') }}"
   vars_files:
     - ./config.yml
 
   tasks:
-    - name: Starting Now ... Deploying 2-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...
-      debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
 
-    - name: Getting your Public IP Address
-      local_action:
-        module: uri
-        url: http://checkip.amazonaws.com
-        return_content: yes
-      register: local_ip
-      failed_when: not local_ip.content | regex_search ('(\d+).(\d+).(\d+).(\d+)\n')
+    - name: Starting Now ... THIS CAN TAKE SOME TIME (10-15 MIN) ... HAVE A COFFEE AND RELAX!
+      debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
 
-    - name: Set Public Network Variable
-      set_fact:
-        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
-        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
-
-    - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
-      azure_rm_deployment:
-        state: present
-        resource_group_name: "{{ RESOURCE_GROUP }}"
+    - name: Create Server NIC {{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0 with Security Group vlab-{{ STUDENT_ID }}-sg0
+      azure_rm_networkinterface:
         location: "{{ DEFAULT_LOCATION }}"
-        template_link: "https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/template_bigip-2nic-payg.json"
-        parameters:
-          adminUsername:
-            value: "{{ ADMINUSERNAME }}"
-          authenticationType:
-            value: "password"
-          adminPasswordOrKey:
-            value: "{{ ADMINPASSWORD }}"
-          dnsLabel:
-            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
-          instanceName:
-            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
-          numberOfExternalIps:
-            value: 1
-          instanceType:
-            value: "Standard_DS3_v2"
-          imageName:
-            value: "Best200Mbps"
-          bigIpVersion:
-            value: "15.1.004000"
-          bigIpModules:
-            value : "ltm:nominal,asm:nominal"
-          vnetName:
-            value: "{{ VNET1 }}"
-          vnetResourceGroupName:
-            value: "{{ RESOURCE_GROUP }}"
-          mgmtSubnetName:
-            value: "{{ SUBNET_MGMT }}"
-          mgmtIpAddress:
-            value: "{{ BIGIP_ADDRESS_MGMT }}"
-          externalSubnetName:
-            value: "{{ SUBNET_EXT }}"
-          externalIpAddressRangeStart:
-            value: "{{ BIGIP_ADDRESS_EXT }}"
-          avSetChoice:
-            value: "CREATE_NEW"
-          zoneChoice:
-            value: "1"
-          provisionPublicIP:
-            value: "Yes"
-          declarationUrl:
-            value: "NOT_SPECIFIED"
-          ntpServer:
-            value: "0.pool.ntp.org"
-          timeZone:
-            value: "UTC"
-          customImageUrn:
-            value: "OPTIONAL"
-          customImage:
-            value: "OPTIONAL"
-          restrictedSrcAddress:
-            value: "{{ ALLOWED_SRC_ADDRESS }}"
-          tagValues:
-            value: {"application":"APP","cost":"COST","environment":"ENV","group":"GROUP","owner":"OWNER"}
-          allowUsageAnalytics:
-            value: "No"
-          allowPhoneHome:
-            value: "Yes"
-
-    - name: Modify BIG-IP Network Security Group {{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg
-      azure_rm_securitygroup:
         resource_group: "{{ RESOURCE_GROUP }}"
-        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
-        rules:
-            - name: 'Allow_TCP_{{item}}'
-              protocol: Tcp
-              source_address_prefix: "{{ ALLOWED_SRC_ADDRESS }}"
-              destination_port_range: "{{item}}"
-              access: Allow
-              priority: "{{ my_idx|int + 100 }}"
-              direction: Inbound
-      loop: "{{ALLOWED_PORTS}}"
-      loop_control:
-        index_var: my_idx
+        security_group: "vlab-{{ STUDENT_ID }}-sg0"
+        name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0"
+        virtual_network: "{{ VNET1 }}"
+        subnet: "{{ SUBNET_EXT }}"
+        ip_configurations:
+          - name: ipconfig1
+            private_ip_allocation_method: Static
+            private_ip_address: "{{ NODE_ADDRESS }}"
+            public_ip_address_name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-pip0"
 
-    - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
-ubuntu@cbbe946bb485:~/vlab-azure$
-ubuntu@cbbe946bb485:~/vlab-azure$ cat 03_deploy_bigip_3nic_azure.yml
-# Deploy a 3-NIC BIG-IP VE
-# template_link is a copy of: "https://raw.githubusercontent.com/F5Networks/f5-azure-arm-templates/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.json"
-# Template parameters from https://github.com/F5Networks/f5-azure-arm-templates/blob/master/supported/standalone/3nic/existing-stack/payg/azuredeploy.parameters.json
-# Template v8.1.0.0
-# imageName => Good200Mbps / Best200Mbps / AdvancedWaf200Mbps
-# if imageName is AdvancedWaf200Mbps ==> bigIpModules = "asm:nominal,fps:nominal"
+    - name: Setting Lamp Server Public DNS Name to {{ NODE_NAME }}-{{ STUDENT_ID }}
+      azure_rm_publicipaddress:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-pip0"
+        domain_name: "{{ NODE_NAME }}-{{ STUDENT_ID }}"
 
-- name: 03 - Deploy BIG-IP 3-NIC on Azure (Management, Internal & External)
-  hosts: localhost
-  connection: local
-  vars_files:
-    - ./config.yml
-
-  tasks:
-    - name: Starting Now ... Deploying 3-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...
-      debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
-
-    - name: Getting your Public IP Address
-      local_action:
-        module: uri
-        url: http://checkip.amazonaws.com
-        return_content: yes
-      register: local_ip
-      failed_when: not local_ip.content | regex_search ('(\d+).(\d+).(\d+).(\d+)\n')
-
-    - name: Set Public Network Variable
-      set_fact:
-        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
-        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
-
-    - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
-      azure_rm_deployment:
-        state: present
-        resource_group_name: "{{ RESOURCE_GROUP }}"
+    - name: Create {{ NODE_NAME }}-{{ STUDENT_ID }} Virtual Machine
+      #no_log: true
+      azure_rm_virtualmachine:
         location: "{{ DEFAULT_LOCATION }}"
-        template_link: "https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/template_bigip-3nic-payg.json"
-        parameters:
-          adminUsername:
-            value: "{{ ADMINUSERNAME }}"
-          authenticationType:
-            value: "password"
-          adminPasswordOrKey:
-            value: "{{ ADMINPASSWORD }}"
-          dnsLabel:
-            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
-          instanceName:
-            value: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
-          numberOfExternalIps:
-            value: 1
-          instanceType:
-            value: "Standard_DS3_v2"
-          imageName:
-            value: "Best200Mbps"
-          bigIpVersion:
-            value: "15.1.004000"
-          bigIpModules:
-            value : "ltm:nominal,asm:nominal"
-          vnetName:
-            value: "{{ VNET1 }}"
-          vnetResourceGroupName:
-            value: "{{ RESOURCE_GROUP }}"
-          mgmtSubnetName:
-            value: "{{ SUBNET_MGMT }}"
-          mgmtIpAddress:
-            value: "{{ BIGIP_ADDRESS_MGMT }}"
-          externalSubnetName:
-            value: "{{ SUBNET_EXT }}"
-          externalIpAddressRangeStart:
-            value: "{{ BIGIP_ADDRESS_EXT }}"
-          internalSubnetName:
-            value: "{{ SUBNET_INT }}"
-          internalIpAddress:
-            value: "{{ BIGIP_ADDRESS_INT }}"
-          avSetChoice:
-            value: "CREATE_NEW"
-          zoneChoice:
-            value: "1"
-          provisionPublicIP:
-            value: "Yes"
-          declarationUrl:
-            value: "NOT_SPECIFIED"
-          ntpServer:
-            value: "0.pool.ntp.org"
-          timeZone:
-            value: "UTC"
-          customImageUrn:
-            value: "OPTIONAL"
-          customImage:
-            value: "OPTIONAL"
-          restrictedSrcAddress:
-            value: "{{ ALLOWED_SRC_ADDRESS }}"
-          tagValues:
-            value: {"application":"APP","cost":"COST","environment":"ENV","group":"GROUP","owner":"OWNER"}
-          allowUsageAnalytics:
-            value: "No"
-          allowPhoneHome:
-            value: "Yes"
-
-    - name: Modify BIG-IP Network Security Group with new rules ({{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg)
-      azure_rm_securitygroup:
         resource_group: "{{ RESOURCE_GROUP }}"
-        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
-        rules:
-              - name: 'Allow_TCP_{{item}}'
-                protocol: Tcp
-                source_address_prefix: '{{ ALLOWED_SRC_ADDRESS }}'
-                destination_port_range: "{{item}}"
-                access: Allow
-                priority: "{{ my_idx|int + 100 }}"
-                direction: Inbound
-      loop: "{{ALLOWED_PORTS}}"
-      loop_control:
-        index_var: my_idx
+        name: "{{ NODE_NAME }}-{{ STUDENT_ID }}"
+        vm_size: Standard_B2s
+        #managed_disk_type: Standard_LRS
+        managed_disk_type: Premium_LRS
+        admin_username: "{{ NODE_USER }}"
+        admin_password: "{{ NODE_PASSWORD }}"
+        network_interfaces: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-nic0"
+        append_tags: True
+        tags:
+          OperatingSystem: "Ubuntu"
+          OperatingSystemVersion: "18.04-LTS"
+          Applications: "All"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 18.04-LTS
+          version: latest
 
-#    - name: Enable IP-Forwording for Internal Interface
-#      azure_rm_networkinterface:
-#        location: "{{ DEFAULT_LOCATION }}"
-#        resource_group: "{{ RESOURCE_GROUP }}"
-#        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-int"
-#        virtual_network: "{{ VNET1 }}"
-#        subnet: "{{ SUBNET_INT }}"
-#        enable_ip_forwarding: True
-#        ip_configurations:
-#          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ipconfig1"
-
-#    - name: Enable IP-Forwording for External Interface
-#      azure_rm_networkinterface:
-#        location: "{{ DEFAULT_LOCATION }}"
-#        resource_group: "{{ RESOURCE_GROUP }}"
-#        security_group: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
-#        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext"
-#        virtual_network: "{{ VNET1 }}"
-#        subnet: "{{ SUBNET_EXT }}"
-#        enable_ip_forwarding: True
-#        ip_configurations:
-#          - name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-ipconfig"
-#            primary: True
-#           public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-pip0"
-#          - name: "{{ RESOURCE_GROUP }}-ext-ipconfig0"
-#            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
+    - name: Run init script for docker and dependencies
+      azure_rm_virtualmachineextension:
+        location: "{{ DEFAULT_LOCATION }}"
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: server_onboarding
+        virtual_machine_name: "{{ NODE_NAME }}-{{ STUDENT_ID }}"
+        publisher: Microsoft.Azure.Extensions
+        virtual_machine_extension_type: CustomScript
+        type_handler_version: "2.0"
+        #settings: '{"commandToExecute": "sudo apt-get update ; sudo apt-get install -y docker docker-compose ; sudo docker run --name hackazon --restart unless-stopped -d -p 8080:80 -p 8443:443 ianwijaya/hackazon ; sudo docker run --name nginx01 --restart=unless-stopped -d -p 8081:80 nginx:latest; sudo docker run --name dvwa --restart unless-stopped -d -p 8082:80 vulnerables/web-dvwa; sudo docker run --name f5helloworld --restart unless-stopped -d -p 8083:8080 f5devcentral/f5-hello-world; sudo docker run --name juice-shop --restart=unless-stopped -d -p 8084:3000 bkimminich/juice-shop "}'
+        settings: '{"fileUris": ["https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/config_server.sh"], "commandToExecute": "sh config_server.sh"}'
+        auto_upgrade_minor_version: false
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
