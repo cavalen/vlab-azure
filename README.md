@@ -53,7 +53,7 @@ Run the playbooks in order:
 ansible-playbook 01_deploy_rg_vnet_azure.yml
 ansible-playbook 02_deploy_ubuntu_docker_azure.yml
 ansible-playbook 03_deploy_bigip_2nic_azure.yml
-ansible-playbook 04_install_as3.yml
+ansible-playbook 04_install_as3_ts_do.yml
 ansible-playbook 05_deployservices_as3.yml
 ansible-playbook 06_get_information.yml
 ```
@@ -86,9 +86,9 @@ The third playbook deploys a 2-NIC or 3-NIC BIG-IP instance (PAYG) using a suppo
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg \
 https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
 
-**Playbook 04: Install/Update AS3**\
-This one installs AS3 v3.20.0 and TS v1.12.0.\
-We need AS3 version 3.20 to be able to configure all of the services. This version includes a feature to allow the same Virtual IP with different Virtual Servers (shareAddresses)
+**Playbook 04: Install/Update F5 Automation Toolchain (AS3, DO, TS)**\
+This one installs AS3 v3.20.0, TS v1.13.0 and DO v1.14.0 \
+We need AS3 version 3.20 to be able to configure all of the services. Previous versions of AS3 will return an error
 
 **Playbook 05: Deploy Services using AS3**\
 Deploy all the services from Playbook #2 as Virtual Servers.\
@@ -101,6 +101,8 @@ The last playbook displays information relevant for the lab, and saves that info
 - BIG-IP Management IP & URL
 - Virtual Server Public IP and DNS Record
 
+**Playbook 07: Deploy Azure AKS**\
+This optional playbook will deploy an AKS cluster with 2 Nodes, to test the integration with F5 Container Ingress Service (CIS)
 <br />
 
 ## :heavy_exclamation_mark: DELETING THE LAB :heavy_exclamation_mark:
