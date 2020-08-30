@@ -23,7 +23,7 @@
         name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
       register: bigipmgmtinfo
 
-    - name: Setting variables
+    - name: Getting BIG-IP Mgmt Info
       set_fact:
         bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
 
