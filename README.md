@@ -76,10 +76,11 @@ The second playbook deploys an Ubuntu Server with Docker and the following servi
 - Port 8080 (Hackazon)
 - Port 8443 (Hackazon HTTPS)
 - Port 8081 (DVWA)
-- Port 8082 (OWASP Juice Shop)
-- Port 8083 (F5 DemoApp)
+- Port 8082 (F5 DemoApp)
+- Port 8083 (OWASP Juice Shop)
 - Port 8084 (NGINX default homepage)
 - Port 8085 (OWASP bwAPP, run /install.php to start)
+- Port 3000 (Book Catalog API)
 
 **Playbook 03: BIG-IP**\
 The third playbook deploys a 2-NIC or 3-NIC BIG-IP instance (PAYG) using a supported ARM template:\
