@@ -60,7 +60,7 @@
             Lamp user: {{NODE_USER}}/{{NODE_PASSWORD}}\n
             BIG-IP user: {{ADMINUSERNAME}}/{{ADMINPASSWORD}}\n"
 
-    - name: Access Information
+    - name: Deployment Information
       debug: msg="{{info.split('\n')}}"
 
     - name: Saving Information to file info.txt
