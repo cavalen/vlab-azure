@@ -17,4 +17,5 @@ RUN git clone https://github.com/cavalen/vlab-azure \
         && mkdir /home/ubuntu/.azure
 COPY --chown=ubuntu credentials /home/ubuntu/.azure/
 COPY --chown=ubuntu update-repo.sh /home/ubuntu/
-COPY --chown=ubuntu bashrc /home/ubuntu/.bashrc
+COPY --chown=ubuntu bashrc /home/ubuntu/.bashrc 
+ 
