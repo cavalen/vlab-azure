@@ -1,64 +1,71 @@
 # Get information from the infrastructure (Public IPs and DNS), and save it to info.txt
 # Authentication from file $HOME/.azure/credentials
 
-- name: 04 - vLab Information
+- name: 06 - vLab Information
   hosts: localhost
   connection: local
   vars:
     lampinfo: ""
     bigipmgmtinfo: ""
     bigipvsinfo: ""
-    lamppublicip: ""
-    lampdns: ""
-    bigipmgmtip: ""
-    bigipmgmtdns: ""
-    bigipvsip: ""
-    bigipvsdns: ""
+    lamppublicip: "n/a"
+    lampdns: "n/a"
+    bigipmgmtip: "n/a"
+    bigipmgmtdns: "n/a"
+    bigipvsip: "n/a"
+    bigipvsdns: "n/a"
     info: ""
   vars_files:
     - ./config.yml
 
   tasks:
-  
-    - name: Getting Lamp Server Info
+    - name: Getting Ubuntu Server Info
       azure_rm_publicipaddress_info:
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "{{ NODE_NAME }}-{{ STUDENT_ID }}-int-pip0"
       register: lampinfo
+      ignore_errors: yes
 
     - name: Getting BIG-IP Mgmt Info
       azure_rm_publicipaddress_info:
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
       register: bigipmgmtinfo
+      ignore_errors: yes
 
     - name: Getting BIG-IP Virtual Server Info
       azure_rm_publicipaddress_info:
         resource_group: "{{ RESOURCE_GROUP }}"
         name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-pip0"
       register: bigipvsinfo
+      ignore_errors: yes
 
-    - name: Setting variables
+    - name: Setting BIG-IP variables
       set_fact:
-        lamppublicip: "{{lampinfo.publicipaddresses[0].ip_address }}"
-        lampdns: "{{lampinfo.publicipaddresses[0].dns_settings.fqdn}}"
         bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
         bigipmgmtdns: "{{bigipmgmtinfo.publicipaddresses[0].dns_settings.fqdn}}"
         bigipvsip: "{{bigipvsinfo.publicipaddresses[0].ip_address}}"
         bigipvsdns: "{{bigipvsinfo.publicipaddresses[0].dns_settings.fqdn}}"
+      when: (bigipmgmtinfo.publicipaddresses[0].ip_address is defined) and (bigipvsinfo.publicipaddresses[0].ip_address is defined)
+
+    - name: Setting Ubuntu Server variables
+      set_fact:
+        lamppublicip: "{{lampinfo.publicipaddresses[0].ip_address }}"
+        lampdns: "{{lampinfo.publicipaddresses[0].dns_settings.fqdn}}"
+      when: (lampinfo.publicipaddresses[0].ip_address is defined)
 
     - name: Setting Variables
       set_fact:
         info: "\n
-            Lamp Server IP: {{lamppublicip}}\n
-            Lamp Server DNS: {{lampdns}}\n
-            BIG-IP Mgmt IP: {{bigipmgmtip}}\n
-            BIG-IP Mgmt DNS: https://{{bigipmgmtdns}}\n
-            BIG-IP (Virtual Server) IP: {{bigipvsip}}\n
-            BIG-IP (Virtual Server) DNS: {{bigipvsdns}}\n
-            \n
-            Lamp user: {{NODE_USER}}/{{NODE_PASSWORD}}\n
-            BIG-IP user: {{ADMINUSERNAME}}/{{ADMINPASSWORD}}\n"
+          Lamp Server IP: {{lamppublicip}}\n
+          Lamp Server DNS: {{lampdns}}\n
+          BIG-IP Mgmt IP: {{bigipmgmtip}}\n
+          BIG-IP Mgmt DNS: https://{{bigipmgmtdns}}\n
+          BIG-IP (Virtual Server) IP: {{bigipvsip}}\n
+          BIG-IP (Virtual Server) DNS: {{bigipvsdns}}\n
+          \n
+          Lamp user: {{NODE_USER}}/{{NODE_PASSWORD}}\n
+          BIG-IP user: {{ADMINUSERNAME}}/{{ADMINPASSWORD}}\n"
 
     - name: Deployment Information
       debug: msg="{{info.split('\n')}}"
