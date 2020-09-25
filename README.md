@@ -65,7 +65,7 @@ ansible-playbook 06_get_information.yml
 
 <br />
 
-Note: If you need to deploy using your own license, use the corresponding playbook (ansible-playbook 03_deploy_bigip_2nic_BYOL_azure.yml) and update the parameter `BIGIP_LICENSE` in `config.yml` with a valid license.\
+Note: If you need to deploy using your own license, use the corresponding playbook (ansible-playbook 03_deploy_bigip_2nic_BYOL_azure.yml) and update the parameter `BIGIP_LICENSE` in `config.yml` with a valid license.
 
 If you already have an Azure Account and get a 403 error like this, You need to add a **Contributor Role** to your Registered Application in Azure.
 
