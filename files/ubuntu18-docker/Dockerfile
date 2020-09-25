@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 ENV TZ=America/Bogota
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt update && apt install -y --no-install-recommends tzdata software-properties-common sudo openssl openssh-client git python3-pip python3-setuptools python3-wheel unzip rpm curl wget nano gnupg2\
+RUN apt update && apt install -y --no-install-recommends tzdata software-properties-common sudo openssl openssh-client git python3-pip python3-setuptools python3-wheel unzip rpm curl wget nano gnupg2 jq\
  && curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list && apt update && apt install -y kubectl\
  && pip3 install ansible \
  && pip3 install boto3 netaddr 'ansible[azure]' \
@@ -17,5 +17,4 @@ RUN git clone https://github.com/cavalen/vlab-azure \
         && mkdir /home/ubuntu/.azure
 COPY --chown=ubuntu credentials /home/ubuntu/.azure/
 COPY --chown=ubuntu update-repo.sh /home/ubuntu/
-COPY --chown=ubuntu bashrc /home/ubuntu/.bashrc 
- 
+COPY --chown=ubuntu bashrc /home/ubuntu/.bashrc
