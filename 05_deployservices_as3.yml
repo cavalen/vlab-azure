@@ -1,4 +1,4 @@
-- name: 06 Deploy Apps using AS3
+- name: 05 Deploy Apps using AS3
   hosts: localhost
   connection: local
   vars:
@@ -16,7 +16,6 @@
     - ./config.yml
 
   tasks:
-
     - name: Getting BIG-IP Mgmt Info
       azure_rm_publicipaddress_info:
         resource_group: "{{ RESOURCE_GROUP }}"
