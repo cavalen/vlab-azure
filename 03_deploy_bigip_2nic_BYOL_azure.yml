@@ -27,7 +27,7 @@
         #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
         ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
 
-    - name: Deploy F5 BIG-IP on Azure - PAYG - Existing Stack
+    - name: Deploy F5 BIG-IP on Azure - BYOL - Existing Stack
       azure_rm_deployment:
         state: present
         resource_group_name: "{{ RESOURCE_GROUP }}"
