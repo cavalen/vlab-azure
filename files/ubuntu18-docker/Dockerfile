@@ -4,7 +4,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update && apt install -y --no-install-recommends tzdata software-properties-common sudo openssl openssh-client git python3-pip python3-setuptools python3-wheel unzip rpm curl wget nano gnupg2 jq\
  && curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list\
  && apt update && apt install -y kubectl\
- && pip3 install ansible \
+ && pip3 install 'ansible==2.9.14' \
  && pip3 install boto3 netaddr 'ansible[azure]' \
  && curl -sL https://aka.ms/InstallAzureCLIDeb -o InstallAzureCLIDeb && bash InstallAzureCLIDeb \
  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache/pip/*
