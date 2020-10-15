@@ -136,7 +136,7 @@ ToDo:
 - Do not use an ARM template to deploy BIG-IP, instead create the VM from scratch
 - Use the same NSG for BIG-IP and Ubuntu Server
 - pool member autodiscover
-- Migrate to azure collection
+- Issues with Ansible 2.10 --> Migrate to MS Azure Collection (?)
 - Migrate to F5 Templates v2.0
 
 <br />
