@@ -1,9 +1,18 @@
-# Update/Install AS3, TS & DO RPMs
+# Update/Install latest AS3, TS & DO RPMs
 
 - name: 04 Install AS3, TS & DO RPMs
   hosts: localhost
   connection: local
   vars:
+    as3_uri: "https://github.com/F5Networks/f5-appsvcs-extension/releases"
+    as3_filename: ""
+    as3_version: ""
+    ts_uri: "https://github.com/F5Networks/f5-telemetry-streaming/releases"
+    ts_filename: ""
+    ts_version: ""
+    do_uri: "https://github.com/F5Networks/f5-declarative-onboarding/releases"
+    do_filename: ""
+    do_version: ""
     bigipmgmtip: ""
     bigipmgmtinfo: ""
     provider:
@@ -18,6 +27,53 @@
     - ./config.yml
 
   tasks:
+
+    ### Get AS3 latest version ###
+    - name: Get AS3 Version
+      action: shell curl -s {{ as3_uri }} | grep -o -P "f5-appsvcs-\d.*noarch\.rpm" -m 1 | sed -n 1p | cut -d "-" -f 3
+      register: as3_version
+
+    - debug:
+        var: as3_version.stdout_lines[0]
+
+    - name: Get latest AS3 RPM name
+      action: shell curl -s {{ as3_uri }} | grep -o -P "f5-appsvcs-\d.*noarch\.rpm" -m 1
+      register: as3_filename
+
+    - debug:
+        var: as3_filename.stdout_lines[0]
+
+    ### Get TS latest version ###
+    - name: Get TS Version
+      action: shell curl -s {{ ts_uri }} | grep -o -P "f5-telemetry-\d.*noarch.rpm" -m 1 | sed -n 1p | cut -d "-" -f 3
+      register: ts_version
+
+    - debug:
+        var: ts_version.stdout_lines[0]
+
+    - name: Get latest TS RPM name
+      action: shell curl -s {{ ts_uri }} | grep -o -P "f5-telemetry-\d.*noarch.rpm" -m 1
+      register: ts_filename
+
+    - debug:
+        var: ts_filename.stdout_lines[0]
+
+    ### Get DO latest version ###
+    - name: Get DO Version
+      action: shell curl -s {{ do_uri }} | grep -o -P "f5-declarative-onboarding-\d.*noarch\.rpm" -m 1 | sed -n 1p | cut -d "-" -f 4
+      register: do_version
+
+    - debug:
+        var: do_version.stdout_lines[0]
+
+    - name: Get latest DO RPM name
+      action: shell curl -s {{ do_uri }} | grep -o -P "f5-declarative-onboarding-\d.*noarch\.rpm" -m 1
+      register: do_filename
+
+    - debug:
+        var: do_filename.stdout_lines[0]
+
+    ### BIG-IP INFO ###
     - name: Getting BIG-IP Mgmt Info
       azure_rm_publicipaddress_info:
         resource_group: "{{ RESOURCE_GROUP }}"
@@ -43,19 +99,25 @@
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
-        f5app_services_package_url: "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.23.0/f5-appsvcs-3.23.0-5.noarch.rpm"
-        f5app_services_package_path: "/tmp/f5-appsvcs-3.23.0-5.noarch.rpm"
+        f5app_services_package_url: "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v{{as3_version.stdout_lines[0]}}/{{as3_filename.stdout_lines[0]}}"
+        f5app_services_package_path: "/tmp/{{as3_filename.stdout_lines[0]}}"
+        #f5app_services_package_url: "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.23.0/f5-appsvcs-3.23.0-5.noarch.rpm"
+        #f5app_services_package_path: "/tmp/f5-appsvcs-3.23.0-5.noarch.rpm"
 
     - name: Download and Install Telemetry Streaming (TS) RPM
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
-        f5app_services_package_url: "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.15.0/f5-telemetry-1.15.0-4.noarch.rpm"
-        f5app_services_package_path: "/tmp/f5-telemetry-1.15.0-4.noarch.rpm"
+        f5app_services_package_url: "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v{{ts_version.stdout_lines[0]}}/{{ts_filename.stdout_lines[0]}}"
+        f5app_services_package_path: "/tmp/{{ts_filename.stdout_lines[0]}}"
+        #f5app_services_package_url: "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.15.0/f5-telemetry-1.15.0-4.noarch.rpm"
+        #f5app_services_package_path: "/tmp/f5-telemetry-1.15.0-4.noarch.rpm"
 
     - name: Download and Install Declarative Onboarding (DO) RPM
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
-        f5app_services_package_url: "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.16.0/f5-declarative-onboarding-1.16.0-8.noarch.rpm"
-        f5app_services_package_path: "/tmp/f5-declarative-onboarding-1.16.0-8.noarch.rpm"
+        f5app_services_package_url: "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v{{do_version.stdout_lines[0]}}/{{do_filename.stdout_lines[0]}}"
+        f5app_services_package_path: "/tmp/{{do_filename.stdout_lines[0]}}"
+        #f5app_services_package_url: "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.16.0/f5-declarative-onboarding-1.16.0-8.noarch.rpm"
+        #f5app_services_package_path: "/tmp/f5-declarative-onboarding-1.16.0-8.noarch.rpm"
