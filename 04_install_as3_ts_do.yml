@@ -43,19 +43,19 @@
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
-        f5app_services_package_url: "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.22.1/f5-appsvcs-3.22.1-1.noarch.rpm"
-        f5app_services_package_path: "/tmp/f5-appsvcs-3.22.1-1.noarch.rpm"
+        f5app_services_package_url: "https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.23.0/f5-appsvcs-3.23.0-5.noarch.rpm"
+        f5app_services_package_path: "/tmp/f5-appsvcs-3.23.0-5.noarch.rpm"
 
     - name: Download and Install Telemetry Streaming (TS) RPM
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
-        f5app_services_package_url: "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.14.0/f5-telemetry-1.14.0-2.noarch.rpm"
-        f5app_services_package_path: "/tmp/f5-telemetry-1.14.0-2.noarch.rpm"
+        f5app_services_package_url: "https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v1.15.0/f5-telemetry-1.15.0-4.noarch.rpm"
+        f5app_services_package_path: "/tmp/f5-telemetry-1.15.0-4.noarch.rpm"
 
     - name: Download and Install Declarative Onboarding (DO) RPM
       include_role:
         name: f5devcentral.f5app_services_package
       vars:
-        f5app_services_package_url: "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.15.0/f5-declarative-onboarding-1.15.0-3.noarch.rpm"
-        f5app_services_package_path: "/tmp/f5-declarative-onboarding-1.15.0-3.noarch.rpm"
+        f5app_services_package_url: "https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.16.0/f5-declarative-onboarding-1.16.0-8.noarch.rpm"
+        f5app_services_package_path: "/tmp/f5-declarative-onboarding-1.16.0-8.noarch.rpm"
