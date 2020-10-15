@@ -135,8 +135,10 @@ ToDo:
 
 - Option to create BIG-IP VM from scratch, without using ARM template
 - Use the same NSG for BIG-IP and Ubuntu Server
-- pool member autodiscover
+- Pool member autodiscover
 - Not working with Ansible 2.10 --> Migrate to MS Azure Collection (?)
+  - https://github.com/ansible-collections/azure
+  - https://cloudblogs.microsoft.com/opensource/2020/04/28/announcing-azcollection-the-ansible-collection-for-azure/
 - Migrate to F5 Templates v2.0
 
 <br />
