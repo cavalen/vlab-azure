@@ -3,7 +3,7 @@
 ## F5 vLab in Azure
 
 **Description**\
-F5 vLab environment in Azure, using a 2-NIC or 3-NIC deployment
+Deploy F5 vLab environment in Azure, using a 2-NIC or 3-NIC deployment, using Ansible (2.9)
 
 - Mgmt VLAN, default = 10.1.10.0/24
 - External VLAN, default = 10.1.10.0/24
@@ -136,7 +136,7 @@ ToDo:
 - Do not use an ARM template to deploy BIG-IP, instead create the VM from scratch
 - Use the same NSG for BIG-IP and Ubuntu Server
 - pool member autodiscover
-- Issues with Ansible 2.10 --> Migrate to MS Azure Collection (?)
+- Not working with Ansible 2.10 --> Migrate to MS Azure Collection (?)
 - Migrate to F5 Templates v2.0
 
 <br />
