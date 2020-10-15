@@ -133,7 +133,7 @@ ansible_playbook 99_delete_lab_azure.yml
 
 ToDo:
 
-- Do not use an ARM template to deploy BIG-IP, instead create the VM from scratch
+- Option to create BIG-IP VM from scratch, without using ARM template
 - Use the same NSG for BIG-IP and Ubuntu Server
 - pool member autodiscover
 - Not working with Ansible 2.10 --> Migrate to MS Azure Collection (?)
