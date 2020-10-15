@@ -137,6 +137,7 @@ ToDo:
 - Use the same NSG for BIG-IP and Ubuntu Server
 - pool member autodiscover
 - Migrate to azure collection
+- Migrate to F5 Templates v2.0
 
 <br />
 <br />
