@@ -23,9 +23,10 @@ To run this playbooks you need:
 
 ### Part 1: Download Ubuntu Container with all the necessary tools
 
-You need a machine with Docker. You can get Docker for Windows/Mac at [this link](https://www.docker.com/products/docker-desktop)\
-Now, use a pre-configured Docker Container running Ubuntu and Ansible to deploy the infrastructure:\
-Open an interactive console to the container:
+You need a machine with Docker. Get Docker for Windows/Mac at [this link](https://www.docker.com/products/docker-desktop)\
+Use a pre-configured Docker Container running Ubuntu and Ansible to deploy the infrastructure:\
+
+From your command line, open an interactive console to the container:
 
 ```
 docker run -it --name ubuntu-vlab cavalen/ubuntu18-vlab
@@ -33,7 +34,7 @@ docker run -it --name ubuntu-vlab cavalen/ubuntu18-vlab
 
 ### Part 2: Configure your Azure Credentials.
 
-You need your Subscription ID, Client ID, Secret and Tenant ID.
+You need your Azure Subscription ID, Client ID, Secret and Tenant ID.
 
 Create or edit the file `$HOME/.azure/credentials` with the following syntax and using your account info:
 
@@ -65,9 +66,9 @@ ansible-playbook 06_get_information.yml
 
 <br />
 
-Note: If you need to deploy using your own license, use the corresponding playbook (ansible-playbook 03_deploy_bigip_2nic_BYOL_azure.yml) and update the parameter `BIGIP_LICENSE` in `config.yml` with a valid license.
+Note: If you need to deploy using your own license, use the corresponding playbook (ansible-playbook 03_deploy_bigip_2nic_byol_azure.yml) and update the parameter `BIGIP_LICENSE` in `config.yml` with a valid license.
 
-If you already have an Azure Account and get a 403 error like this, You need to add a **Contributor Role** to your Registered Application in Azure.
+Note: If you already have an Azure Account and get a 403 error like this, You need to add a **Contributor Role** to your Registered Application in Azure.
 
 ```
 fatal: [localhost]: FAILED! => {"changed": false, "msg": "Error checking for existence of name vLAB-student - 403 Client Error:
