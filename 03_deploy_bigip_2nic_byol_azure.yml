@@ -7,6 +7,16 @@
 - name: 03 - Deploy BIG-IP 2-NIC on Azure (Management & External)
   hosts: localhost
   connection: local
+  vars:
+    bigipmgmtip: ""
+    bigipmgmtinfo: ""
+    provider:
+      server: "{{ bigipmgmtip }}"
+      server_port: "443"
+      user: "{{ADMINUSERNAME}}"
+      password: "{{ADMINPASSWORD}}"
+      validate_certs: no
+      transport: "rest"  
   vars_files:
     - ./config.yml
 
@@ -115,5 +125,27 @@
       loop: "{{ALLOWED_PORTS}}"
       loop_control:
         index_var: my_idx
+
+    ### Changing some BIG-IP settings ###
+    - name: Getting BIG-IP Mgmt Info
+      azure_rm_publicipaddress_info:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
+      register: bigipmgmtinfo
+
+    - name: Getting BIG-IP Mgmt Info
+      set_fact:
+        bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
+
+    - name: Setting BIG-IP variables
+      bigip_command:
+        provider: "{{ provider }}"
+        commands:
+          - modify sys db ui.advisory.enabled value true
+          - modify sys db ui.advisory.color value "blue"
+          - modify sys db ui.advisory.text value "BIG-IP Azure - {{STUDENT_ID}}"
+          - modify sys db ui.system.preferences.recordsperscreen value 100
+          - modify sys httpd auth-pam-idle-timeout 7200
+        warn: false
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
