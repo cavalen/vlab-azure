@@ -9,6 +9,16 @@
 - name: 03 - Deploy BIG-IP 2-NIC on Azure (Management & External)
   hosts: localhost
   connection: local
+  vars:
+    bigipmgmtip: ""
+    bigipmgmtinfo: ""
+    provider:
+      server: "{{ bigipmgmtip }}"
+      server_port: "443"
+      user: "{{ADMINUSERNAME}}"
+      password: "{{ADMINPASSWORD}}"
+      validate_certs: no
+      transport: "rest"  
   vars_files:
     - ./config.yml
 
