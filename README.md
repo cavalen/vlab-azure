@@ -94,8 +94,7 @@ The second playbook deploys an Ubuntu Server with Docker and the following servi
 
 **Playbook 03: BIG-IP**\
 The third playbook deploys a 2-NIC or 3-NIC BIG-IP instance (PAYG) using a supported ARM template:\
-https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/2nic/existing-stack/payg \
-https://github.com/F5Networks/f5-azure-arm-templates/tree/master/supported/standalone/3nic/existing-stack/payg
+https://github.com/F5Networks/f5-azure-arm-templates
 
 **Playbook 04: Install/Update F5 Automation Toolchain (AS3, DO, TS)**\
 This one installs AS3 v3.20.0, TS v1.13.0 and DO v1.14.0 \
