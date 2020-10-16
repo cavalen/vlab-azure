@@ -1,7 +1,7 @@
 # Deploy a 2-NIC BIG-IP VE - BYOL
-# template_link is a copy of: https://github.com/F5Networks/f5-azure-arm-templates/blob/v8.1.1.0/supported/standalone/2nic/existing-stack/payg/azuredeploy.json
-# Template parameters from: https://github.com/F5Networks/f5-azure-arm-templates/blob/v8.1.1.0/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
-# Template v9.0.0
+# template_link is a copy of: https://github.com/F5Networks/f5-azure-arm-templates/blob/v9.1.0.0/supported/standalone/2nic/existing-stack/payg/azuredeploy.json                              
+# Template parameters from: https://github.com/F5Networks/f5-azure-arm-templates/blob/v9.1.0.0/supported/standalone/2nic/existing-stack/payg/azuredeploy.parameters.json
+# Template v9.1.0
 # bigIpModules = "asm:nominal,fps:nominal"
 
 - name: 03 - Deploy BIG-IP 2-NIC on Azure (Management & External)
