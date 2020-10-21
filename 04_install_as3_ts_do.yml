@@ -1,4 +1,6 @@
 # Update/Install AS3, TS & DO RPMs
+# Need "rpm" package installed 
+# Works in ubuntu 18 linux ("grep" parameters might be different in other releases)
 
 - name: 04 Install AS3, TS & DO RPMs
   hosts: localhost
@@ -97,17 +99,6 @@
     - name: Getting BIG-IP Mgmt Info
       set_fact:
         bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
-
-    - name: Setting BIG-IP variables
-      bigip_command:
-        provider: "{{ provider }}"
-        commands:
-          - modify sys db ui.advisory.enabled value true
-          - modify sys db ui.advisory.color value "blue"
-          - modify sys db ui.advisory.text value "BIG-IP Azure - {{STUDENT_ID}}"
-          - modify sys db ui.system.preferences.recordsperscreen value 100
-          - modify sys httpd auth-pam-idle-timeout 7200
-        warn: false
 
     - name: Download and Install Application Services 3 (AS3) RPM
       include_role:
