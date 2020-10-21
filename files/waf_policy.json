@@ -53,10 +53,16 @@
     },
     "response-pages": [
      {
+       "responseContent": "<html><head><title>Request Rejected</title></head><body>Su solicitud fue rechazada, Hacker !!!.<br><br>Your support ID is: <%TS.request.ID()%><br><br><a href='javascript:history.back();'>[Go Back]</a></body></html>",
+       "responseHeader": "HTTP /1.1 200 OK\\r\\nCache-Control: no-cache\\r\\nConnection: close",
+       "responseActionType": "custom",
+       "responsePageType": "failed-login-honeypot"
+     },
+     {
        "responseContent": "Pagina de Bloqueo Custom",
        "responseHeader": "HTTP /1.1 302 OK\\r\\nConnection: close",
        "responseActionType": "custom",
-       "responsePageType": "failed-login-honeypot"
+       "responsePageType": "default"
      }
     ],
     "webhooks": [
