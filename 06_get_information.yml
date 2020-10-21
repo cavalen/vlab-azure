@@ -63,7 +63,6 @@
           BIG-IP Mgmt DNS: https://{{bigipmgmtdns}}\n
           BIG-IP (Virtual Server) IP: {{bigipvsip}}\n
           BIG-IP (Virtual Server) DNS: {{bigipvsdns}}\n
-          \n
           Lamp user: {{NODE_USER}}/{{NODE_PASSWORD}}\n
           BIG-IP user: {{ADMINUSERNAME}}/{{ADMINPASSWORD}}\n"
 
