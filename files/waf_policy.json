@@ -53,7 +53,7 @@
     },
     "response-pages": [
      {
-       "responseContent": "<html><head><title>Request Rejected</title></head><body>Su solicitud fue rechazada, <b>Hacker!!!</b> &#9760;&#65039;<br><br>Your support ID is: <%TS.request.ID()%><br><br><a href='javascript:history.back();'>[Go Back]</a></body></html>",
+       "responseContent": "<html><head><title>Request Rejected</title></head><body><h1>Su solicitud fue rechazada, <b>Hacker!!!</b> &#9760;&#65039;<br><br>Your support ID is: <%TS.request.ID()%><br><br></h1><a href='javascript:history.back();'>[Go Back]</a></body></html>",
        "responseHeader": "HTTP /1.1 200 OK\\r\\nCache-Control: no-cache\\r\\nConnection: close",
        "responseActionType": "custom",
        "responsePageType": "default"
