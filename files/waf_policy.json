@@ -53,7 +53,7 @@
     },
     "response-pages": [
      {
-       "responseContent": "custom content",
+       "responseContent": "Pagina de Bloqueo Custom",
        "responseHeader": "HTTP /1.1 302 OK\\r\\nConnection: close",
        "responseActionType": "custom",
        "responsePageType": "failed-login-honeypot"
