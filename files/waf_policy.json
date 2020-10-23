@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/f5devcentral/f5-asm-policy-templates/v1.1/declerative%20policy%20schema/schema_v16_0.json",
   "policy": {
     "name": "vLabWAF-hackazon",
     "description": "DECLARATIVE Policy AND WEBHOOKS",
@@ -36,7 +37,14 @@
           "alarm": true,
           "block": true,
           "learn": true
-        }        
+        },
+        {
+          "alarm": true,
+          "block": false,
+          "description": "Dataguard only alarm and learn",
+          "learn": true,
+          "name": "VIOL_DATA_GUARD"
+        }
       ]
     },
     "signature-settings": {
@@ -53,18 +61,18 @@
       "lastCcnDigitsToExpose": 4
     },
     "response-pages": [
-     {
-       "responseContent": "<html><head><title>Request Rejected</title></head><body><h1>Su solicitud fue rechazada, <b>Hacker!!!</b> &#9760;&#65039;<br><br>Your support ID is: <%TS.request.ID()%><br><br></h1><a href='javascript:history.back();'>[Go Back]</a></body></html>",
-       "responseHeader": "HTTP /1.1 200 OK\\r\\nCache-Control: no-cache\\r\\nConnection: close",
-       "responseActionType": "custom",
-       "responsePageType": "default"
-     },
-     {
-       "responseContent": "Custom Blocking Page",
-       "responseHeader": "HTTP /1.1 302 OK\\r\\nConnection: close",
-       "responseActionType": "custom",
-       "responsePageType": "failed-login-honeypot"
-     }
+      {
+        "responseContent": "<html><head><title>Request Rejected</title></head><body><h1>Su solicitud fue rechazada, <b>Hacker!!!</b> &#9760;&#65039;<br><br>Your support ID is: <%TS.request.ID()%><br><br></h1><a href='javascript:history.back();'>[Go Back]</a></body></html>",
+        "responseHeader": "HTTP /1.1 200 OK\\r\\nCache-Control: no-cache\\r\\nConnection: close",
+        "responseActionType": "custom",
+        "responsePageType": "default"
+      },
+      {
+        "responseContent": "Custom Blocking Page",
+        "responseHeader": "HTTP /1.1 302 OK\\r\\nConnection: close",
+        "responseActionType": "custom",
+        "responsePageType": "failed-login-honeypot"
+      }
     ],
     "webhooks": [
       {
@@ -80,6 +88,61 @@
         "triggerEvent": "http-request-illegal",
         "url": "https://webhook.site/0c83a9a9-a02e-496e-9a08-8f5f7a478a32",
         "name": "vLab_webhook_event"
+      }
+    ],
+    "urls": [
+      {
+        "protocol": "https",
+        "name": "/user/login",
+        "method": "*",
+        "type": "explicit",
+        "performStaging": false,
+        "isAllowed": true
+      }
+    ],
+    "login-pages": [
+      {
+        "url": { 
+          "protocol": "https",
+          "name": "/user/login",
+          "method": "*",
+          "type": "explicit",
+          "performStaging": false,
+          "isAllowed": true
+        },
+        "authenticationType": "form",
+        "usernameParameterName": "username",
+        "passwordParameterName": "password",
+        "accessValidation": {
+          "headerContains": "Location: /account",
+          "responseHttpStatus": "302",
+          "responseOmits": "Username or password are incorrect"
+        }
+      }
+    ],
+    "session-tracking": {
+      "sessionTrackingConfiguration": {
+        "enableSessionAwareness": true,
+        "userNameSource": "all-login-pages",
+        "enableTrackingSessionHijackingByDeviceId": true
+      }
+    },
+    "brute-force-attack-preventions": [
+      {
+        "bruteForceProtectionForAllLoginPages": true,
+        "loginAttemptsFromTheSameUser": {
+          "enabled": true,
+          "action": "alarm-and-captcha",
+          "threshold": 5
+        },
+        "loginAttemptsFromTheSameDeviceId": {
+          "enabled": true,
+          "action": "alarm-and-captcha",
+          "threshold": 5
+        },
+        "loginAttemptsFromTheSameIp": { "enabled": false },
+        "clientSideIntegrityBypassCriteria": { "enabled": false },
+        "captchaBypassCriteria": { "enabled": false }
       }
     ]
   }
