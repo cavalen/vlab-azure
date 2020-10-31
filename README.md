@@ -140,6 +140,8 @@ ToDo:
   - https://cloudblogs.microsoft.com/opensource/2020/04/28/announcing-azcollection-the-ansible-collection-for-azure/
 - Migrate to F5 Templates v2.0
 - Shell Script to run all of the playbooks in order
+- Install ATC using new rol 
+  - https://github.com/f5devcentral/ansible-role-f5_atc_deploy_declaration
 
 <br />
 <br />
