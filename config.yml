@@ -14,7 +14,7 @@ STUDENT_ID: cav
 RESOURCE_GROUP: "{{STUDENT_ID}}-vlab"
 
 #Some Locations: "Central US" "East US 2" "East US" "West US" "South Central US" "Brazil South"
-DEFAULT_LOCATION: "Central US"
+DEFAULT_LOCATION: "East US"
 
 VNET1: lab-vnet-{{STUDENT_ID}}
 
