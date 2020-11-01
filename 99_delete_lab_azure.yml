@@ -6,15 +6,22 @@
   vars_files:
     - ./config.yml
 
-  tasks: 
+  vars_prompt:
+    - name: borrar
+      prompt: Delete Resource Group "{{ RESOURCE_GROUP }}"? --> (yes/no) ?
+      private: no
+      default: "no"
+
+  tasks:
     - name: STARTING NOW ...
       debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
-    
+
     - name: DELETE resource group "{{ RESOURCE_GROUP }}"
       azure_rm_resourcegroup:
         name: "{{ RESOURCE_GROUP }}"
         location: "{{ DEFAULT_LOCATION }}"
         state: absent
         force_delete_nonempty: yes
+      when: borrar == 'yes'
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
