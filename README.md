@@ -23,8 +23,8 @@ To run this playbooks you need:
 
 ### Part 1: Download Ubuntu Container with all the necessary tools
 
-You need a machine with Docker. Get Docker for Windows/Mac at [this link](https://www.docker.com/products/docker-desktop)\
-Use a pre-configured Docker Container running Ubuntu and Ansible to deploy the infrastructure:\
+You machine must have Docker installed, to run a pre-configured container with the necessary tools to deploy the infrastructure:\
+Get Docker for Windows/Mac at [this link](https://www.docker.com/products/docker-desktop)
 
 From your command line, open an interactive console to the container:
 
@@ -36,7 +36,7 @@ docker run -it --name ubuntu-vlab cavalen/ubuntu-vlab
 
 You need your Azure Subscription ID, Client ID, Secret and Tenant ID.
 
-Create or edit the file `$HOME/.azure/credentials` with the following syntax and using your account info:
+Edit the file `$HOME/.azure/credentials` with the following syntax and using your account info:
 
 ```
 [default]
@@ -49,6 +49,11 @@ tenant=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 :heavy_check_mark: Note: You can use `azure-cli` to setup your Azure credentials instead.
 
 ### Part 3: Deploy Azure infrastructure using Ansible:
+
+Clone this repo running the command:
+```
+git clone https://github.com/cavalen/vlab-azure
+```
 
 Go to folder `vlab-azure`\
 Edit `config.yml` and change the `STUDENT_ID` parameter. **_Use lowercase letters and numbers only._**
