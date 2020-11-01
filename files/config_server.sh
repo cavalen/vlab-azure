@@ -1,11 +1,11 @@
 !/bin/bash
 
-# Install Docker, Ansible
-sudo apt update
+# Install Docker
+sudo apt update -y
 sudo apt install -y software-properties-common docker.io docker-compose python3-pip
 sudo systemctl enable docker
 sudo systemctl start docker
-echo -e "Docker, Ansible Installed"
+echo -e "Docker Installed"
 
 # Run containers
 sudo docker run --name hackazon --restart unless-stopped -d -p 8080:80 -p 8443:443 ianwijaya/hackazon
@@ -28,3 +28,5 @@ cd /home/f5student/
 git clone https://github.com/cavalen/bookscatalog
 cd ./bookscatalog
 sudo docker-compose up -d
+
+
