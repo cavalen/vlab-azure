@@ -36,7 +36,7 @@ docker run -it --name ubuntu-vlab cavalen/ubuntu-vlab
 
 You need your Azure Subscription ID, Client ID, Secret and Tenant ID.
 
-Edit the file `/home/ubuntu/.azure/credentials` with the following syntax and using your account info:
+Edit the file `/home/ubuntu/.azure/credentials` and replace the values with your account information:
 
 ```
 [default]
