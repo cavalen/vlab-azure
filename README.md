@@ -20,7 +20,7 @@ To run this playbooks you need:
   - [Client ID (Application ID)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
   - [Secret (Client Secret)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
   - [Tenant ID (Directory ID)](https://portal.azure.com/?quickstart=true#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview)
-<br>
+<br/>
 ### Part 1: Download Ubuntu Container with all the necessary tools
 
 You machine must have Docker installed, to run a pre-configured container with the necessary tools to deploy the infrastructure:\
@@ -31,7 +31,7 @@ From your command line, open an interactive console to the container:
 ```
 docker run -it --name ubuntu-vlab cavalen/ubuntu-vlab
 ```
-<br>
+<br/>
 ### Part 2: Configure your Azure Credentials.
 
 You need your Azure Subscription ID, Client ID, Secret and Tenant ID.
@@ -47,7 +47,7 @@ tenant=xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 :heavy_check_mark: Note: You can use `azure-cli` to setup your Azure credentials instead.
-<br>
+<br/>
 ### Part 3: Deploy Azure infrastructure using Ansible:
 
 Clone this repo running the command:
