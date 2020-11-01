@@ -111,7 +111,7 @@ This one installs the latest version of AS3, TS and DO \
 **Playbook 05: Deploy Services using AS3**\
 Deploy all the services from Playbook #2 as Virtual Servers.\
 Hackazon (8443) Virtual Server includes a Declarative WAF policy.\
-Local `as3.json` file is referenced by this playbook, and is the input for our declarative Rest API\
+Local `as3.json` file is referenced by this playbook, and is the input for our declarative Rest API \
 
 **Playbook 06: Get Infrastructure Information**\
 The last playbook displays information relevant for the lab, and saves that information in a local file: **info.txt**
