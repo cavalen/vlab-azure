@@ -5,13 +5,7 @@
     bigipmgmtip: ""
     bigipmgmtinfo: ""
     bigipvsip: ""
-    provider:
-      user: "{{ ADMINUSERNAME }}"
-      password: "{{ ADMINPASSWORD }}"
-      server: "{{ bigipmgmtip }}"
-      validate_certs: no
-      server_port: 443
-      timeout: 60
+
   vars_files:
     - ./config.yml
 
@@ -29,9 +23,40 @@
     - name: MGMT IP
       debug: msg="{{bigipmgmtip}}"
 
-    - name: Deploying AS3 configuration
-      bigip_appsvcs_extension:
-        content: "{{ lookup('file', '{{ playbook_dir }}/as3.json') }}"
-        #content: "{{ lookup('file', '{{ playbook_dir }}/as3-empty.json') }}"
-        state: present
-        provider: "{{ provider }}"
+    - name: Getting BIG-IP VS Private IP
+      set_fact:
+        bigipvsip: "{{BIGIP_ADDRESS_EXT | ipmath (1) }}"
+
+    - name: VS Private IP
+      debug: msg="{{bigipvsip}}"
+
+    - name: AS3 POST
+      include_role:
+        name: f5devcentral.atc_deploy
+      vars:
+        atc_method: POST
+        #atc_declaration_file: as3.json
+        #atc_declaration_file: as3-empty.json
+        atc_declaration: "{{ lookup('template', 'as3.tmpl.json') }}"
+        #atc_declaration_url: "https://testurl/as3.json"
+        atc_delay: 10
+        atc_retries: 5
+        provider:
+          user: "{{ ADMINUSERNAME }}"
+          password: "{{ ADMINPASSWORD }}"
+          server: "{{ bigipmgmtip }}"
+          validate_certs: no
+          server_port: 443
+          timeout: 60
+          auth_provider: tmos
+
+    # atc_AS3_status, atc_DO_status , atc_TS_status
+    - debug: var=atc_AS3_status
+
+#    Deprecated 
+#    - name: Deploying AS3 configuration
+#      bigip_appsvcs_extension:
+#        content: "{{ lookup('file', '{{ playbook_dir }}/as3.json') }}"
+#        #content: "{{ lookup('file', '{{ playbook_dir }}/as3-empty.json') }}"
+#        state: present
+#        provider: "{{ provider }}"

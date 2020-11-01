@@ -16,7 +16,7 @@
             "vs_Hackazon_http_8080": {
                "class": "Service_HTTP",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "pool": "pool_hackazon_8080",
                "virtualPort": 8080,
@@ -30,7 +30,7 @@
                "members": [{
                   "servicePort": 8080,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             }
@@ -41,7 +41,7 @@
             "vs_dvwa_8081": {
                "class": "Service_HTTP",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "pool": "pool_dvwa",
                "virtualPort": 8081,
@@ -55,7 +55,7 @@
                "members": [{
                   "servicePort": 8081,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             }
@@ -66,7 +66,7 @@
             "vs_f5demoapp_8082": {
                "class": "Service_HTTP",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "pool": "pool_f5demoapp",
                "virtualPort": 8082,
@@ -80,7 +80,7 @@
                "members": [{
                   "servicePort": 8082,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             }
@@ -91,7 +91,7 @@
             "vs_juice_8083": {
                "class": "Service_HTTP",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "pool": "pool_juice",
                "virtualPort": 8083,
@@ -105,7 +105,7 @@
                "members": [{
                   "servicePort": 8083,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             }
@@ -116,7 +116,7 @@
             "vs_nginx_8084": {
                "class": "Service_HTTP",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "pool": "pool_nginx",
                "virtualPort": 8084,
@@ -130,7 +130,7 @@
                "members": [{
                   "servicePort": 8084,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             }
@@ -141,7 +141,7 @@
             "vs_bwAPP_8085": {
                "class": "Service_HTTP",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "pool": "pool_bwapp",
                "virtualPort": 8085,
@@ -155,7 +155,7 @@
                "members": [{
                   "servicePort": 8085,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             }
@@ -166,7 +166,7 @@
             "vs_hackazon_https_waf_8443": {
                "class": "Service_HTTPS",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "shareAddresses": true,
                "redirect80": false,
@@ -175,9 +175,9 @@
                "serverTLS": "pTlsServer_Local",
                "virtualPort": 8443,
                "securityLogProfiles": [
-                  {
-                     "bigip": "/Common/Log all requests"
-                  }
+                     {
+                        "bigip": "/Common/Log all requests"
+                     }
                ],
                "policyWAF": {
                   "use": "vLabWAF"
@@ -191,7 +191,7 @@
                "members": [{
                   "servicePort": 8443,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             },
@@ -226,7 +226,7 @@
             "vs_BooksCatalogAPI_3000": {
                "class": "Service_HTTP",
                "virtualAddresses": [
-                  "10.1.10.246"
+                  "{{bigipvsip}}"
                ],
                "pool": "pool_bookscatalogapi",
                "virtualPort": 3000,
@@ -240,7 +240,7 @@
                "members": [{
                   "servicePort": 3000,
                   "serverAddresses": [
-                     "10.1.10.80"
+                     "{{NODE_ADDRESS}}"
                   ]
                }]
             }
