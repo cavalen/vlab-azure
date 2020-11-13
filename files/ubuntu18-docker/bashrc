@@ -118,3 +118,12 @@ if ! shopt -oq posix; then
   fi
 fi
 export PS1="\[\033[38;5;11m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\h:\[$(tput sgr0)\]\[\033[38;5;6m\][\w]:\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"
+
+TIEMPO_INICIO() {
+   tiempoinicio=$(date +%s)
+   echo $tiempoinicio
+   }
+
+TIEMPO_FIN() {
+   echo "Tiempo Total: $(date -ud "@$(($(date +%s) - $tiempoinicio))" +%T) (HH:MM:SS)"
+}
