@@ -14,8 +14,8 @@ USER ubuntu
 # Collection azure.azcollection solves an issue deploying AKS
 RUN ansible-galaxy install f5devcentral.f5app_services_package && ansible-galaxy install f5devcentral.atc_deploy && ansible-galaxy collection install azure.azcollection --force
 WORKDIR /home/ubuntu
-RUN git clone https://github.com/cavalen/vlab-azure \
-        && mkdir /home/ubuntu/.azure
+RUN git clone https://github.com/cavalen/vlab-azure && git clone https://github.com/cavalen/vlab-azure-tf \
+ && mkdir /home/ubuntu/.azure
 COPY --chown=ubuntu credentials /home/ubuntu/.azure/
 COPY --chown=ubuntu update-repo.sh /home/ubuntu/
 COPY --chown=ubuntu bashrc /home/ubuntu/.bashrc
