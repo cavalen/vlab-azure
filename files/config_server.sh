@@ -17,14 +17,12 @@ sudo docker run --name bwaap --restart=unless-stopped -d -p 8085:80 raesene/bwap
 
 # Kafka Container - for Telemetry Streaming
 cd /home/azureuser/
-git clone https://github.com/wurstmeister/kafka-docker
-rm -f /home/azureuser/kafka-docker/docker-compose.yml
-curl https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/docker-compose.yml -o /home/azureuser/kafka-docker/docker-compose.yml
+git clone https://github.com/cavalen/kafka-docker
 cd /home/azureuser/kafka-docker/
 sudo docker-compose up -d
 
 # Book Catalog API - Lab API Protection - Port TCP:3000
-cd /home/f5student/
+cd /home/azureuser/
 git clone https://github.com/cavalen/bookscatalog
 cd ./bookscatalog
 sudo docker-compose up -d
