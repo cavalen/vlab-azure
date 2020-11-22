@@ -57,6 +57,7 @@
     - name: Setting Variables
       set_fact:
         info: "\n
+          Resource Group: {{RESOURCE_GROU}}\n
           Lamp Server IP: {{lamppublicip}}\n
           Lamp Server DNS: {{lampdns}}\n
           BIG-IP Mgmt IP: {{bigipmgmtip}}\n
