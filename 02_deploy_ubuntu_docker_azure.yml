@@ -70,6 +70,6 @@
         settings: '{"fileUris": ["https://raw.githubusercontent.com/cavalen/vlab-azure/master/files/config_server.sh"], "commandToExecute": "nohup sh config_server.sh </dev/null >/dev/null 2>&1 & "}'
         auto_upgrade_minor_version: false
 
-    - debug: msg="- NOTE - Server is installing software in the background, It can take 10-15 min for all services to be available"
+    - debug: msg="- NOTE - Server is installing software in the background, It can take 8-10 min for all services to be available"
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
