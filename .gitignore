@@ -35,3 +35,5 @@ terraform.rc
 terraform.tfvars
 *.rpm
 git.sh
+info.txt
+
