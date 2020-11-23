@@ -1,0 +1,138 @@
+# Deploy a 2-NIC BIG-IP VE using image
+# imageName => Good200Mbps / Best200Mbps / AdvancedWaf200Mbps 
+# if imageName is AdvancedWaf ==> bigIpModules = "ltm:none,asm:nominal,fps:nominal"
+
+
+- name: 03 - Deploy BIG-IP 2-NIC on Azure (Management & External)
+  hosts: localhost
+  connection: local
+  vars:
+    bigipmgmtip: ""
+    bigipmgmtinfo: ""
+    provider:
+      server: "{{ bigipmgmtip }}"
+      server_port: "443"
+      user: "{{ADMINUSERNAME}}"
+      password: "{{ADMINPASSWORD}}"
+      validate_certs: no
+      transport: "rest"  
+  vars_files:
+    - ./config.yml
+
+  tasks:
+    - name: Starting Now ... Deploying 2-NIC BIG-IP. THIS CAN TAKE SOME TIME (7-10 MIN) ...
+      debug: msg="Starting now @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }} "
+
+    - name: Getting your Public IP Address
+      local_action:
+        module: uri
+        url: http://checkip.amazonaws.com
+        return_content: yes
+      register: local_ip
+      failed_when: not local_ip.content | regex_search ('(\d+).(\d+).(\d+).(\d+)\n')
+
+    - name: Set Public Network Variable
+      set_fact:
+        #ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipsubnet (24,0) }}"
+        ALLOWED_SRC_ADDRESS: "{{ local_ip.content | ipaddr ('host') }}"
+
+    - name: BIG-IP Network Security Group {{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg
+      azure_rm_securitygroup:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-nsg"
+        rules:
+            - name: 'Allow_TCP_{{item}}'
+              protocol: Tcp
+              source_address_prefix: "{{ ALLOWED_SRC_ADDRESS }}"
+              destination_port_range: "{{item}}"
+              access: Allow
+              priority: "{{ my_idx|int + 100 }}"
+              direction: Inbound
+      loop: "{{ALLOWED_PORTS}}"
+      loop_control:
+        index_var: my_idx
+
+    # BIG-IP -> Mgmt NIC y Public IP
+    - name: BIG-IP Mgmt NIC {{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-nic with Security Group vlab-{{ STUDENT_ID }}-sg0
+      azure_rm_networkinterface:
+        location: "{{ DEFAULT_LOCATION }}"
+        resource_group: "{{ RESOURCE_GROUP }}"
+        security_group: "vlab-{{ STUDENT_ID }}-sg0"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt"
+        virtual_network: "{{ VNET1 }}"
+        subnet: "{{ SUBNET_MGMT }}"
+        ip_configurations:
+          - name: "ipconfigmgmt"
+            private_ip_allocation_method: Static
+            private_ip_address: "{{ BIGIP_ADDRESS_MGMT }}"
+            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
+
+    # BIG-IP -> External NIC (Self IP + VIP) y Public IPs
+    - name: BIG-IP External NIC {{ BIGIP_NAME }}-{{ STUDENT_ID }}-exit with Security Group vlab-{{ STUDENT_ID }}-sg0
+      azure_rm_networkinterface:
+        location: "{{ DEFAULT_LOCATION }}"
+        resource_group: "{{ RESOURCE_GROUP }}"
+        security_group: "vlab-{{ STUDENT_ID }}-sg0"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext"
+        virtual_network: "{{ VNET1 }}"
+        subnet: "{{ SUBNET_EXT }}"
+        ip_configurations:
+          - name: "ipconfigext1"
+            private_ip_allocation_method: Static
+            private_ip_address: "{{ BIGIP_ADDRESS_EXT }}"
+            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-self-ipconfig"
+          - name: "ipconfigext2"
+            private_ip_allocation_method: Static
+            private_ip_address: "{{ BIGIP_ADDRESS_VIP }}"
+            public_ip_address_name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext-ipconfig0"
+
+    - name: Create {{ BIGIP_NAME }}-{{ STUDENT_ID }} Virtual Machine
+      azure_rm_virtualmachine:
+        location: "{{ DEFAULT_LOCATION }}"
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}"
+        vm_size: Standard_DS2_v2
+        managed_disk_type: Premium_LRS
+        admin_username: "{{ ADMINUSERNAME }}"
+        admin_password: "{{ ADMINPASSWORD }}"
+        network_interfaces: ["{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt", "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-ext"]
+        append_tags: True
+        image:
+          publisher: f5-networks
+          offer: f5-big-ip-best
+          sku: f5-bigip-virtual-edition-25m-best-hourly
+          version: latest
+        plan:
+          name: f5-bigip-virtual-edition-25m-best-hourly
+          product: f5-big-ip-best
+          publisher: f5-networks
+        tags:
+          application: "APP"
+          cost: "COST"
+          environment: "ENV"
+          group: "GROUP"
+          owner: "OWNER"
+
+    ### Changing some BIG-IP settings ###
+    - name: Getting BIG-IP Mgmt Info
+      azure_rm_publicipaddress_info:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
+      register: bigipmgmtinfo
+
+    - name: Getting BIG-IP Mgmt Info
+      set_fact:
+        bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
+
+    - name: Setting BIG-IP variables
+      bigip_command:
+        provider: "{{ provider }}"
+        commands:
+          - modify sys db ui.advisory.enabled value true
+          - modify sys db ui.advisory.color value "blue"
+          - modify sys db ui.advisory.text value "BIG-IP Azure - {{STUDENT_ID}}"
+          - modify sys db ui.system.preferences.recordsperscreen value 100
+          - modify sys httpd auth-pam-idle-timeout 7200
+        warn: false
+
+    - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"
