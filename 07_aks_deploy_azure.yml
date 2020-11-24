@@ -1,5 +1,5 @@
 # Crear cluster AKS en subnet External, version 1.18.8
-# Edita ssh_key si necesita acceder a los nodos 
+# Edita ssh_key si necesita acceder a los nodos
 
 - name: 07 - Create a managed Azure Container Services -AKS- instance
   hosts: localhost

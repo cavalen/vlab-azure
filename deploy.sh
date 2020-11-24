@@ -35,7 +35,7 @@ echo ""
 
 if [ $aks == 'Y' ] || [ $aks == 'y' ]
 then
-  ansible-playbook 07_aks_deploy.yml
+  ansible-playbook 07_aks_deploy_azure.yml
 fi
 ansible-playbook 06_get_information.yml
 echo "========================================"
