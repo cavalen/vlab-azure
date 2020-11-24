@@ -1,4 +1,4 @@
-# Deploy a 3-NIC BIG-IP VE
+# Deploy a 3-NIC BIG-IP VE (PAYG)
 # template_link is a copy of: https://github.com/F5Networks/f5-azure-arm-templates/blob/v9.1.0.0/supported/standalone/3nic/existing-stack/payg/azuredeploy.json
 # Template parameters from: https://github.com/F5Networks/f5-azure-arm-templates/blob/v9.1.0.0/supported/standalone/3nic/existing-stack/payg/azuredeploy.json
 # Template v9.1.0.0
