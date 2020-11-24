@@ -30,17 +30,35 @@
     - name: VS Private IP
       debug: msg="{{bigipvsip}}"
 
-    - name: AS3 POST
+    - name: DO POST
       include_role:
         name: f5devcentral.atc_deploy
       vars:
         atc_method: POST
+        atc_declaration: "{{ lookup('template', 'do.tmpl.json') }}"
+        atc_delay: 20
+        atc_retries: 10
+        provider:
+          user: "{{ ADMINUSERNAME }}"
+          password: "{{ ADMINPASSWORD }}"
+          server: "{{ bigipmgmtip }}"
+          validate_certs: no
+          server_port: 443
+          timeout: 60
+          auth_provider: tmos
+
+    - debug: var=atc_DO_status 
+
+    - name: AS3 POST
+      include_role:
+        name: f5devcentral.atc_deploy
+      vars:
         #atc_declaration_file: as3.json
         #atc_declaration_file: as3-empty.json
-        atc_declaration: "{{ lookup('template', 'as3.tmpl.json') }}"
+        atc_declaration: "{{ lookup('template', './as3.tmpl.json') }}"
         #atc_declaration_url: "https://testurl/as3.json"
-        atc_delay: 10
-        atc_retries: 5
+        atc_delay: 20
+        atc_retries: 10
         provider:
           user: "{{ ADMINUSERNAME }}"
           password: "{{ ADMINPASSWORD }}"
