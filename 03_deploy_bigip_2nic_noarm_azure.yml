@@ -185,21 +185,4 @@
           - modify sys httpd auth-pam-idle-timeout 7200
           #- modify sys provision asm level nominal
 
-    - name: Provision LTM at "nominal" level
-      bigip_provision:
-        module: ltm
-        level: nominal
-      provider: "{{ provider }}"
-
-    - name: Wait for BIG-IP to be ready
-      bigip_wait:
-        timeout: 150
-      provider: "{{ provider }}"
-
-    - name: Provision WAF at "nominal" level
-      bigip_provision:
-        module: asm
-        level: nominal
-      provider: "{{ provider }}"
-
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"

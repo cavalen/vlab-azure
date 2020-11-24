@@ -31,7 +31,7 @@ echo ""
   && ansible-playbook 02_deploy_ubuntu_docker_azure.yml\
   && ansible-playbook 03_deploy_bigip_2nic_noarm_azure.yml\
   && ansible-playbook 04_install_atc.yml\
-  && ansible-playbook 05_deployservices_as3.yml
+  && ansible-playbook 05_deployservices_do_as3.yml
 
 if [ $aks == 'Y' ] || [ $aks == 'y' ]
 then
