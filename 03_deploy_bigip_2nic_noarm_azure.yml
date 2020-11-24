@@ -163,25 +163,43 @@
 #        type_handler_version: "2.0"
 #        settings: '{"fileUris": ["https://raw.githubusercontent.com/cavalen/aolab-azure/master/files/install-runtime-init.sh"], "commandToExecute": "sh install-runtime-init.sh 2>&1 & "}'
 
-#    ### Changing some BIG-IP settings ###
-#    - name: Getting BIG-IP Mgmt Info
-#      azure_rm_publicipaddress_info:
-#        resource_group: "{{ RESOURCE_GROUP }}"
-#        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
-#      register: bigipmgmtinfo
-#
-#    - name: Getting BIG-IP Mgmt Info
-#      set_fact:
-#        bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
-#
-#    - name: Setting BIG-IP variables
-#      bigip_command:
-#        provider: "{{ provider }}"
-#        commands:
-#          - modify sys db ui.advisory.enabled value true
-#          - modify sys db ui.advisory.color value "blue"
-#          - modify sys db ui.advisory.text value "BIG-IP Azure - {{STUDENT_ID}}"
-#          - modify sys db ui.system.preferences.recordsperscreen value 100
-#          - modify sys httpd auth-pam-idle-timeout 7200
+    ### Changing some BIG-IP settings ###
+    - name: Getting BIG-IP Mgmt Info
+      azure_rm_publicipaddress_info:
+        resource_group: "{{ RESOURCE_GROUP }}"
+        name: "{{ BIGIP_NAME }}-{{ STUDENT_ID }}-mgmt-pip"
+      register: bigipmgmtinfo
+
+    - name: Getting BIG-IP Mgmt Info
+      set_fact:
+        bigipmgmtip: "{{bigipmgmtinfo.publicipaddresses[0].ip_address }}"
+
+    - name: Setting BIG-IP variables
+      bigip_command:
+        provider: "{{ provider }}"
+        commands:
+          - modify sys db ui.advisory.enabled value true
+          - modify sys db ui.advisory.color value "blue"
+          - modify sys db ui.advisory.text value "BIG-IP Azure - {{STUDENT_ID}}"
+          - modify sys db ui.system.preferences.recordsperscreen value 100
+          - modify sys httpd auth-pam-idle-timeout 7200
+          #- modify sys provision asm level nominal
+
+    - name: Provision LTM at "nominal" level
+      bigip_provision:
+        module: ltm
+        level: nominal
+      provider: "{{ provider }}"
+
+    - name: Wait for BIG-IP to be ready
+      bigip_wait:
+        timeout: 150
+      provider: "{{ provider }}"
+
+    - name: Provision WAF at "nominal" level
+      bigip_provision:
+        module: asm
+        level: nominal
+      provider: "{{ provider }}"
 
     - debug: msg="Finishing ... @ {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}"

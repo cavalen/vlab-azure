@@ -1,7 +1,7 @@
-# Crear cluster AKS en subnet External, version 10.18.6 
+# Crear cluster AKS en subnet External, version 1.18.8
 # Edita ssh_key si necesita acceder a los nodos 
 
-- name: Create a managed Azure Container Services (AKS) instance 
+- name: 07 - Create a managed Azure Container Services -AKS- instance
   hosts: localhost
   connection: local
   vars:
@@ -20,7 +20,7 @@
       name: "{{ SUBNET_EXT }}"
     register: subnet
 
-  - name: Get External Subnet ID 
+  - name: Get External Subnet ID
   #  debug: msg="{{subnet.subnets[0].id}}"
     set_fact:
       subnet_id: "{{subnet.subnets[0].id}}"
@@ -31,14 +31,14 @@
       name: "myLogAnalyticsWorkspace-{{STUDENT_ID}}"
       sku: per_node
     register: law
-   
+
   - name: Deploying AKS :)
     azure_rm_aks:
       name: "AKS-Cluster-{{STUDENT_ID}}"
       location: "{{ DEFAULT_LOCATION }}"
       resource_group: "{{ RESOURCE_GROUP }}"
       dns_prefix: dns-akslab-{{STUDENT_ID}}
-      kubernetes_version: 1.18.6
+      kubernetes_version: "1.18.8"
       linux_profile:
         admin_username: "{{ ADMINUSERNAME }}"
         ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6ykfu51NTd11ukwyXoOmGiEPVJ08Zugfk7ZrMuqMkr1ow7wvACUkBbKAekQFhwewXgCalaedS5s8xW3M7dq2GKYNHw1odUZXRfw52opy1Vo4kN3B9xtlL9JxIHq1mqkc/5NQmkrhb+RA3zALPMHssuHtqsqNCl4vcLV58Qoo7uTRXjZp4GnftyIeGpXciM1mtTIF1SQlsjnG7eoz0R+jR5jRgtb8+7DJZlS2uK+fGOnRjoHBHF6AGWp+f0FSDVb9Gss6CWJV5nt1Cc+x2o3BOyW61x6hDWSTPDeuZLeOGLR25Wzr0vlsOeT1biQydL3TYB3rJr82U+Gp1zAMNhm33
